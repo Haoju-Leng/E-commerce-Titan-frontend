@@ -1,7 +1,7 @@
 {
-  "name": "assignment5",
+  "name": "e-commerce-titans",
   "version": "1.0.0",
-  "description": "Assignment 5",
+  "description": "e-commerce-titans",
   "main": "/src/server/index.js",
   "type": "module",
   "dependencies": {
@@ -30,7 +30,7 @@
     "test": "cross-env NODE_ENV=test mocha --recursive",
     "test-ci": "cross-env NODE_ENV=ci mocha --recursive"
   },
-  "author": "G. Hemingway",
+  "author": "e-commerce-titans",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.3",

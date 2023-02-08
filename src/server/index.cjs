@@ -40,27 +40,27 @@ const setupServer = async () => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
 
-  try {
-    // Connect to MongoDB
-    await mongoose.connect(conf.mongodb);
-    mongoose.connection.on("disconnected", () => {
-      console.log(`MongoDB shutting down`);
-    });
-    console.log(`MongoDB connected: ${conf.mongodb}`);
-  } catch (err) {
-    console.log(err);
-    process.exit(-1);
-  }
-
-  // Import our Data Models
-  app.models = {
-    Game: require("./models/game.cjs"),
-    Move: require("./models/move.cjs"),
-    User: require("./models/user.cjs"),
-  };
+  // try {
+  //   // Connect to MongoDB
+  //   await mongoose.connect(conf.mongodb);
+  //   mongoose.connection.on("disconnected", () => {
+  //     console.log(`MongoDB shutting down`);
+  //   });
+  //   console.log(`MongoDB connected: ${conf.mongodb}`);
+  // } catch (err) {
+  //   console.log(err);
+  //   process.exit(-1);
+  // }
+  //
+  // // Import our Data Models
+  // app.models = {
+  //   Game: require("./models/game.cjs"),
+  //   Move: require("./models/move.cjs"),
+  //   User: require("./models/user.cjs"),
+  // };
 
   // Import our routes
-  require("./api/index.cjs")(app);
+  // require("./api/index.cjs")(app);
 
   // Give them the SPA base page
   app.get("*", (req, res) => {
