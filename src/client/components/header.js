@@ -4,13 +4,13 @@ import './CSS/header.css'
 const SignedInRight = ({user}) => {
     return(
         <ul className="nav navbar-nav navbar-right ml-auto rightSide">
-            <li className="nav-item"><a className={"nav-link"} href="/index" ><span
+            <li className="nav-item"><a className={"nav-link"} href="/profile" ><span
                 className="glyphicon glyphicon-shopping-user"></span>Welcome {user}!
             </a></li>
             <li className="nav-item"><a className={"nav-link"} href="/orders" ><span
                 className="glyphicon glyphicon-list-alt"></span>Orders
             </a></li>
-            <li className="nav-item"><a className={"nav-link"} href="/cart/getCartById"><span
+            <li className="nav-item"><a className={"nav-link"} href="/cart"><span
                 className="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
             <li className="nav-item"><a className={"nav-link"} href="/logout"><span
                 className="glyphicon glyphicon-log-out"></span> Logout</a></li>
