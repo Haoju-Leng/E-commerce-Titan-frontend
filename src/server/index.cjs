@@ -62,6 +62,10 @@ const setupServer = async () => {
   // Import our routes
   // require("./api/index.cjs")(app);
 
+  require("./api/testapi.cjs")(app);
+ 
+
+
   // Give them the SPA base page
   app.get("*", (req, res) => {
     const user = req.session.user;
