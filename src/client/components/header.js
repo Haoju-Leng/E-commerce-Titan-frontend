@@ -23,14 +23,14 @@ const SignedOutRight = () =>{
         <ul className="nav navbar-nav navbar-right rightSide">
             <li><a className={"nav-link"} href="/login" ><span
                 className="glyphicon glyphicon-shopping-cart"></span> My Cart</a></li>
-            <li><a className={"nav-link"} href="/customer/registration" ><span
+            <li><a className={"nav-link"} href="/register" ><span
                 className="glyphicon glyphicon-user"></span> SignUp</a></li>
             <li><a className={"nav-link"} href="/login"><span
                 className="glyphicon glyphicon-log-in"></span>Login</a></li>
         </ul>
     );
 }
-export const Header = ({ user = "", email = "" }) => {
+export const Header = ({ user = "" }) => {
     return(
         <nav className="navbar navbar-light navbar-expand bg-light" style={{marginLeft: -15, marginRight: -15}}>
             <div className="container-fluid">

@@ -82,6 +82,19 @@ const setupServer = async () => {
     });
   });
 
+  const formidable = require('formidable');
+  app.post("/test", async (req, res) => {
+    new formidable.IncomingForm().parse(req, (err, fields, files) => {
+      if (err) {
+        console.error('Error', err)
+        throw err
+      }
+      console.log('Fields', fields)
+      console.log('Files', files)
+    })
+    res.status(200).send({ error: "unauthorized" });
+  });
+
   // Run the server itself
   let server;
   if (env === "production") {

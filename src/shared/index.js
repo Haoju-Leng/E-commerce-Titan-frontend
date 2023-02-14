@@ -16,11 +16,9 @@ export const validPassword = (password) => {
   return undefined;
 };
 
-export const validUsername = (username) => {
-  if (!username || username.length <= 2 || username.length >= 16) {
-    return { error: "Username length must be > 2 and < 16" };
-  } else if (!username.match(/^[a-z0-9]+$/i)) {
-    return { error: "Username must be alphanumeric" };
+export const validEmail = (username) => {
+  if (!username.match(/^[a-z0-9](\.?[a-z0-9]){5,}@vanderbilt\.edu$/)) {
+    return { error: "Email must be a vandy email" };
   }
   return undefined;
 };
