@@ -144,14 +144,15 @@ export const Publish = ( { user } ) => {
             // {
             //     console.log(key[0] + ', ' + key[1])
             // }
-
-            let res = await fetch("/test", { //TODO: update API
+            console.log(user.token);
+            let res = await fetch("http://localhost:8080/api/v1/product/", { //TODO: update API
                 body: formData,
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${user.token}`
                 },
             });
+
             const data = await res.json();
             if (res.ok) {
                 setPublished(true);

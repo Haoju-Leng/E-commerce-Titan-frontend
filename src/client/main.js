@@ -12,17 +12,17 @@ import { Header } from "./components/header.js";
 import { Login } from "./components/login.js";
 import { Logout } from "./components/logout.js";
 import { Register } from "./components/register.js";
-// import { Profile } from "./components/profile.js";
+import { Profile } from "./components/profile.js";
 // import { Start } from "./components/start.js";
-// import { Results } from "./components/results.js";
+import { Cart } from "./components/cart.js";
 import { Publish } from "./components/publish.js";
-// import { EditProfile } from "./components/editProfile.js";
+import { EditProfile } from "./components/editProfile.js";
 // import { MoveDetail } from "./components/moveDetail.js";
 
 const defaultUser = {
     token: "",
     email: "",
-    firstName: "",
+    firstName: "aa",
     lastName: ""
 };
 
@@ -59,6 +59,13 @@ const CheckPublish = ({ loggedIn, state }) =>
         <Navigate to={`/login`} replace={true} />
     ) : (
         <Publish user={state}/>
+    );
+
+const CheckCart = ({ loggedIn, state }) =>
+    loggedIn === "" ? (
+        <Navigate to={`/login`} replace={true} />
+    ) : (
+        <Cart user={state}/>
     );
 
 /***
@@ -109,10 +116,12 @@ const MyApp = () => {
                     />
                     <Route path="/post" element={<CheckPublish loggedIn={loggedIn()} state={state} />} />
                     {/*<Route path="/item/:id" element={<ItemDetail user={state} />} />*/}
-                    {/*<Route*/}
-                    {/*    path="/profile/:username"*/}
-                    {/*    element={<Profile currentUser={state.username} />}*/}
-                    {/*/>*/}
+                    <Route path="/cart" element={<CheckCart loggedIn={loggedIn()} state={state} />} />
+                    {/*<Route path="/edit/:username" element={<EditProfile currentUser={state.username} />} />*/}
+                    <Route
+                        path="/profile"
+                        element={<Profile currentUser={state.username} />}
+                    />
                     {/*<Route*/}
                     {/*    path="/start"*/}
                     {/*    element={*/}
@@ -123,8 +132,8 @@ const MyApp = () => {
                     {/*/>*/}
 
 
-                    {/*<Route path="/results/:id" element={<Results user={state} />} />*/}
-                    {/*<Route path="/edit/:username" element={<EditProfile currentUser={state.username} />} />*/}
+
+
                 </Routes>
             {/*</GridBase>*/}
         </BrowserRouter>
