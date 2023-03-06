@@ -140,75 +140,102 @@ export const Publish = ({ user }) => {
     }
   };
 
-  const setImageState = (ev) => {
-    let tmp = {};
-    for (let i = 0; i < ev.target.files.length; i++) {
-      let filename = `image${i}`;
-      tmp[filename] = ev.target.files[i];
-    }
-    setImage(tmp);
-  };
 
-  const onSubmit = async (ev) => {
-    ev.preventDefault();
+    let [priceError, setPriceError] = useState("");
+    let [unitError, setUnitError] = useState("");
+    let [nameError, setNameError] = useState("");
+    let [submitError, setSubmitError] = useState("");
+    let [image, setImage] = useState({});
+    let [published, setPublished] = useState(false);
+    let [itemID, setItemID] = useState("");
 
-    if (state.productName === "") {
-      setNameError("Error: product name can't be empty");
-    } else if (state.productPrice === "") {
-      setPriceError("Error: product price can't be empty");
-    } else if (state.unitStock === "") {
-      setUnitError("Error: Number of product can't be empty");
-    } else if (priceError === "" && unitError === "" && nameError === "") {
-      const formData = new FormData();
+    useEffect(() => {
+        document.getElementById("productName").focus();
+    }, []);
 
-      for (let i = 0; i < Object.keys(image).length; i++) {
-        formData.append(`image${i}`, image[`image${i}`]);
-      }
+    const onChange = (ev) => {
+        // setPwdError("");
+        // setUserError("");
+        // setAddressError("");
+        setNameError("");
+        // Update from form and clear errors
+        setState({
+            ...state,
+            [ev.target.id]: ev.target.value,
+        });
+        // Make sure the price is valid
+        if (ev.target.id === "productPrice") {
+            let priceInvalid = /^\d+$/.test(ev.target.value);
+            if (!priceInvalid) {setPriceError(`Error: price must be a number`)}
+            else {setPriceError("");}
+        }
+        // Make sure unitStock is valid
+        else if (ev.target.id === "unitStock") {
+            let unitInvalid = /^\d+$/.test(ev.target.value);
+            if (!unitInvalid) {setUnitError(`Error: Number of products must be a number`)}
+            else{
+                setUnitError("");
+            }
+        }
+    };
 
-    //   formData.append(
-    //     "productInfo",
-    //     JSON.stringify({
-    //       productCategory: state.productCategory,
-    //       description: state.productDescription,
-    //       manufacturer: state.productManufacturer,
-    //       name: state.productName,
-    //       price: state.productPrice,
-    //       stock: state.unitStock,
-    //     })
-    //   );
+    const setImageState = (ev) => {
+        let tmp = {};
+        for (let i = 0; i < ev.target.files.length; i++) {
+            let filename = `image${i}`;
+            tmp[filename] = ev.target.files[i];
+        }
+        setImage(tmp);
+    };
 
-      formData.append('productInfo', new Blob([JSON.stringify({
-        productCategory: state.productCategory,
-          description: state.productDescription,
-          manufacturer: state.productManufacturer,
-          name: state.productName,
-          price: state.productPrice,
-          stock: state.unitStock,
-    })], {
-        type: "application/json"
-    }));
-      // for (var key of formData.entries())
-      // {
-      //     console.log(key[0] + ', ' + key[1])
-      // }
+    const onSubmit = async (ev) => {
+        ev.preventDefault();
 
-      let res = await fetch("http://localhost:8080/api/v1/product/", {
-        //TODO: update API
-        body: formData,
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setPublished(true);
-        setItemID(data.id);
-      } else {
-        setSubmitError(`Error: ${data.message}`);
-      }
-    }
-  };
+        if(state.productName === ""){
+            setNameError("Error: product name can't be empty")
+        }else if(state.productPrice === ""){
+            setPriceError("Error: product price can't be empty")
+        }else if(state.unitStock === ""){
+            setUnitError("Error: Number of product can't be empty")
+        }else if(priceError === "" && unitError === "" && nameError === ""){
+            const formData = new FormData();
+
+            for (let i = 0; i < Object.keys(image).length; i++) {
+                formData.append(`image${i}`, image[`image${i}`]);
+            }
+
+            formData.append('productInfo', JSON.stringify({
+                productCategory: state.productCategory,
+                description: state.productDescription,
+                manufacturer: state.productManufacturer,
+                name: state.productName,
+                price: state.productPrice,
+                stock: state.unitStock
+            }));
+            // for (var key of formData.entries())
+            // {
+            //     console.log(key[0] + ', ' + key[1])
+            // }
+            console.log(user.token);
+            let res = await fetch("http://localhost:8080/api/v1/product/", { //TODO: update API
+                body: formData,
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                },
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                setPublished(true);
+                setItemID(data.id);
+            } else {
+                setSubmitError(`Error: ${data.message}`);
+            }
+        }
+
+    };
+
 
   return (
     <Fragment>

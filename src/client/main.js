@@ -13,12 +13,14 @@ import { Header } from "./components/header.js";
 import { Login } from "./components/login.js";
 import { Logout } from "./components/logout.js";
 import { Register } from "./components/register.js";
+
 import { ItemDetail } from "./components/ItemDetail.js";
-// import { Profile } from "./components/profile.js";
+import { Profile } from "./components/profile.js";
+
 // import { Start } from "./components/start.js";
-// import { Results } from "./components/results.js";
+import { Cart } from "./components/cart.js";
 import { Publish } from "./components/publish.js";
-// import { EditProfile } from "./components/editProfile.js";
+import { EditProfile } from "./components/editProfile.js";
 // import { MoveDetail } from "./components/moveDetail.js";
 
 const defaultUser = {
@@ -63,6 +65,13 @@ const CheckPublish = ({ loggedIn, state }) =>
     <Publish user={state} />
   );
 
+const CheckCart = ({ loggedIn, state }) =>
+    loggedIn === "" ? (
+        <Navigate to={`/login`} replace={true} />
+    ) : (
+        <Cart user={state}/>
+    );
+
 /***
  * Main application entry point
  * @returns {JSX.Element}
@@ -95,43 +104,45 @@ const MyApp = () => {
     setState(defaultUser);
   };
 
-  return (
-    <BrowserRouter>
-      {/*<GridBase>*/}
-      <Header user={state.firstName} />
-      <Routes>
-        {/*<Route exact path="/" element={<Landing />} />*/}
-        <Route path="/home" element={<Home user={state} />} />
-        <Route path="/login" element={<Login logIn={logIn} />} />
-        <Route path="/logout" element={<Logout logOut={logOut} />} />
-        <Route
-          path="/register"
-          element={<CheckRegister loggedIn={loggedIn()} logIn={logIn} />}
-        />
-        <Route
-          path="/post"
-          element={<CheckPublish loggedIn={loggedIn()} state={state} />}
-        />
-        <Route path="/item/:id" element={<ItemDetail user={state} />} />
-        {/*<Route*/}
-        {/*    path="/profile/:username"*/}
-        {/*    element={<Profile currentUser={state.username} />}*/}
-        {/*/>*/}
-        {/*<Route*/}
-        {/*    path="/start"*/}
-        {/*    element={*/}
-        {/*        <ReqUser user={state}>*/}
-        {/*            <Start />*/}
-        {/*        </ReqUser>*/}
-        {/*    }*/}
-        {/*/>*/}
+    return (
+        <BrowserRouter>
+            {/*<GridBase>*/}
+                <Header user={state.firstName}/>
+                <Routes>
+                    {/*<Route exact path="/" element={<Landing />} />*/}
+                    <Route path="/home" element={<Home user={state} />} />
+                    <Route path="/login" element={<Login logIn={logIn} />} />
+                    <Route path="/logout" element={<Logout logOut={logOut} />} />
+                    <Route
+                        path="/register"
+                        element={
+                            <CheckRegister loggedIn={loggedIn()} logIn={logIn} />
+                        }
+                    />
+                    <Route path="/post" element={<CheckPublish loggedIn={loggedIn()} state={state} />} />
+                    <Route path="/item/:id" element={<ItemDetail user={state} />} />
+                    <Route path="/cart" element={<CheckCart loggedIn={loggedIn()} state={state} />} />
+                    {/*<Route path="/edit/:username" element={<EditProfile currentUser={state.username} />} />*/}
+                    <Route
+                        path="/profile"
+                        element={<Profile currentUser={state.username} />}
+                    />
+                    {/*<Route*/}
+                    {/*    path="/start"*/}
+                    {/*    element={*/}
+                    {/*        <ReqUser user={state}>*/}
+                    {/*            <Start />*/}
+                    {/*        </ReqUser>*/}
+                    {/*    }*/}
+                    {/*/>*/}
 
-        {/*<Route path="/results/:id" element={<Results user={state} />} />*/}
-        {/*<Route path="/edit/:username" element={<EditProfile currentUser={state.username} />} />*/}
-      </Routes>
-      {/*</GridBase>*/}
-    </BrowserRouter>
-  );
+
+
+
+                </Routes>
+            {/*</GridBase>*/}
+        </BrowserRouter>
+    );
 };
 
 const root = createRoot(document.getElementById("mainDiv"));
