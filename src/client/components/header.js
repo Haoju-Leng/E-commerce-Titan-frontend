@@ -12,6 +12,8 @@ const SignedInRight = ({user}) => {
             </a></li>
             <li className="nav-item"><a className={"nav-link"} href="/cart"><span
                 className="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+                <li className="nav-item"><a className={"nav-link"} href="/post"><span
+                className="glyphicon glyphicon-shopping-cart"></span> Post</a></li>
             <li className="nav-item"><a className={"nav-link"} href="/logout"><span
                 className="glyphicon glyphicon-log-out"></span> Logout</a></li>
         </ul>
@@ -38,7 +40,7 @@ export const Header = ({ user = "" }) => {
             {/*    /!*<img src="<c:url value="/resource/images/logo.png"/>" width="210px" height="130px" alt="logo-image"/>*!/*/}
             {/*    E-commerce Titans*/}
             {/*</div>*/}
-                <a className="navbar-brand" href="/" style={{marginTop: 15}}>Some Names</a>
+                <a className="navbar-brand" href="/home" style={{marginTop: 15}}>Some Names</a>
                 <div className="collapse navbar-collapse" id="myNavbar">
                     {user !== "" ?
                     <SignedInRight user={user}/>
