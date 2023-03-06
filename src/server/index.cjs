@@ -62,6 +62,45 @@ const setupServer = async () => {
   // Import our routes
   // require("./api/index.cjs")(app);
 
+  app.get("/product/get", (req, res) => {
+    let product = {
+      id: 123,
+      productCategory: "product",
+      description: "ps5 bought 3 month ago, well maintained. come with 2 games",
+      manufacturer: "manu",
+      name: "Used ps5 like new",
+      price: 3.5,
+      stock: 12345,
+    };
+    let products = {};
+    for (let i = 0; i < 10; i++) {
+      product.id = product.id + 1;
+      product.name = product.name + 1;
+      products["prod" + i] = { ...product };
+    }
+
+    res.status(200).send(products);
+  });
+
+  app.get("/product/:id", (req, res) => {
+    let product = {
+      id: 123,
+      productCategory: "product",
+      description: "ps5 bought 3 month ago, well maintained. come with 2 games",
+      manufacturer: "manu",
+      name: "Used ps5 like new",
+      price: 3.5,
+      stock: 12345,
+    };
+    res.status(200).send(product);
+  });
+
+  app.post("/cartItem/add/:id", (req, res) => {
+    console.log(req.body);
+
+    res.status(200).send();
+  });
+
   // Give them the SPA base page
   app.get("*", (req, res) => {
     const user = req.session.user;
@@ -82,16 +121,16 @@ const setupServer = async () => {
     });
   });
 
-  const formidable = require('formidable');
+  const formidable = require("formidable");
   app.post("/test", async (req, res) => {
     new formidable.IncomingForm().parse(req, (err, fields, files) => {
       if (err) {
-        console.error('Error', err)
-        throw err
+        console.error("Error", err);
+        throw err;
       }
-      console.log('Fields', fields)
-      console.log('Files', files)
-    })
+      console.log("Fields", fields);
+      console.log("Files", files);
+    });
     res.status(200).send({ error: "unauthorized" });
   });
 
@@ -115,8 +154,8 @@ const setupServer = async () => {
         res.writeHead(302, { Location: location });
         res.end();
       })
-      .listen(80, () => {
-        console.log(`Assignment 4 listening on 80 for HTTPS redirect`);
+      .listen(81, () => {
+        console.log(`Assignment 4 listening on 81 for HTTPS redirect`);
       });
   } else {
     server = app.listen(port, () => {

@@ -11,6 +11,7 @@ export default {
   entry: "./main.js",
   mode: "development",
   devtool: "source-map",
+  watch: true,
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "public/js")

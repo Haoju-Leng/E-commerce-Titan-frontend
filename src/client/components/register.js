@@ -98,7 +98,7 @@ export const Register = (props) => {
         const data = await res.json();
         if (res.ok) {
             props.logIn(data);
-            navigate(`/`);
+            navigate(`/home`);
         } else {
             setPwdError(`Error: ${data.error}`);
         }

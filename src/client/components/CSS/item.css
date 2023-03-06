@@ -1,0 +1,23 @@
+.each-slide-effect > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    width: 300px;
+    height: 300px;
+    resize: both;
+    overflow: scroll;
+
+  }
+  .each-slide-effect img{
+    width: 300px;
+    height: 300px;
+  }
+  
+  .each-slide-effect span {
+    padding: 20px;
+    font-size: 20px;
+    background: #efefef;
+    text-align: center;
+  }
+  
