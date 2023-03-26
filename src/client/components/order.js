@@ -5,9 +5,9 @@ import styled from "styled-components";
 import md5 from "md5";
 import "./CSS/cart.css";
 
-export const Cart = ({user}) => {
+export const Order = ({user}) => {
 
-    let [cartList, updateCartList] = useState({
+    let [orderList, updateOrderList] = useState({
 
     });
 
@@ -23,7 +23,7 @@ export const Cart = ({user}) => {
 
         const data = await res.json();
         if (res.ok) {
-            updateCartList(data);
+            updateOrderList(data);
         } else {
             setError(`Error happened`);
         }
@@ -36,8 +36,7 @@ export const Cart = ({user}) => {
         <div className="container pb-5 mb-2">
             {error !== "" && <div>{error}</div>}
             <br/>
-            <div className="cart-item d-md-flex justify-content-between"><span className="remove-item"><i
-                className="fa fa-times"></i></span>
+            <div className="cart-item d-md-flex justify-content-between">
                 <div className="px-3 my-3">
                     <a className="cart-item-product" href="#">
                         <div className="cart-item-product-thumb"><img
@@ -50,14 +49,7 @@ export const Cart = ({user}) => {
                 <div className="px-3 my-3 text-center">
                     <div className="cart-item-label">Quantity</div>
                     <div className="count-input">
-                        <select className="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                        </select>
+                        <span className="text-xl font-weight-medium">1</span>
                     </div>
                 </div>
                 <div className="px-3 my-3 text-center">
@@ -67,7 +59,14 @@ export const Cart = ({user}) => {
                 <div className="px-3 my-3 text-center">
                     <div className="cart-item-label">Discount</div>
                     <span className="text-xl font-weight-medium">$35.00</span>
+                    <br/>
+                    <div className="mt-2 align-self-end"><a className="btn btn-style-1 btn-primary btn-block"
+                                                                     href="/checkout"><i
+                        className="fe-icon-credit-card"></i>&nbsp;Chat with Seller</a></div>
                 </div>
+
+
+
             </div>
 
             <div className="cart-item d-md-flex justify-content-between"><span className="remove-item"><i
@@ -140,28 +139,15 @@ export const Cart = ({user}) => {
                 </div>
             </div>
 
-            <div className="d-sm-flex justify-content-between align-items-center text-center text-sm-left">
-                <form className="form-inline py-2">
-                    <label className="sr-only">Coupon code</label>
-                    <input className="form-control form-control-sm my-2 mr-3" type="text" placeholder="Coupon code"
-                           required=""/>
-                        <button className="btn btn-style-1 btn-secondary btn-sm my-2 mx-auto mx-sm-0"
-                                type="submit">Apply Coupon
-                        </button>
-                </form>
-                <div className="py-2"><span
-                    className="d-inline-block align-middle text-sm text-muted font-weight-medium text-uppercase mr-2">Subtotal:</span><span
-                    className="d-inline-block align-middle text-xl font-weight-medium">$188.50</span></div>
-            </div>
 
-            <hr className="my-2" />
-                <div className="row pt-3 pb-5 mb-2">
-                    <div className="col-sm-6 mb-3"><a className="btn btn-style-1 btn-secondary btn-block" href="#"><i
-                        className="fe-icon-refresh-ccw"></i>&nbsp;Update Cart</a></div>
-                    <div className="col-sm-6 mb-3"><a className="btn btn-style-1 btn-primary btn-block"
-                                                      href="/checkout"><i
-                        className="fe-icon-credit-card"></i>&nbsp;Checkout</a></div>
-                </div>
+            {/*<hr className="my-2" />*/}
+            {/*<div className="row pt-3 pb-5 mb-2">*/}
+            {/*    <div className="col-sm-6 mb-3"><a className="btn btn-style-1 btn-secondary btn-block" href="#"><i*/}
+            {/*        className="fe-icon-refresh-ccw"></i>&nbsp;Update Cart</a></div>*/}
+            {/*    <div className="col-sm-6 mb-3"><a className="btn btn-style-1 btn-primary btn-block"*/}
+            {/*                                      href="/checkout"><i*/}
+            {/*        className="fe-icon-credit-card"></i>&nbsp;Checkout</a></div>*/}
+            {/*</div>*/}
         </div>
     );
 
