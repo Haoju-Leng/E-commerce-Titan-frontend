@@ -92,14 +92,19 @@ export const Login = (props) => {
                     <div className="col-5">
                       <button
                         className="btn btn-sm btn-success"
-                        style={{ marginLeft: 40 + "px" }}
+                        style={{ marginLeft: 5 + "em" }}
                         onClick={onSubmit}
                       >
                         Login
                       </button>
-                      <div style={{ marginTop: "5px" }}>
-                        <a href="/register" style={{ fontSize: "5px" }}>
+                      <div style={{ marginTop: "1em" }}>
+                        <a href="/register" style={{ fontSize: "0.5em" }}>
                           Don't have an account?
+                        </a>
+                      </div>
+                      <div style={{ marginTop: "0.5em" }}>
+                        <a href="/forgotPassword" style={{ fontSize: "0.5em" }}>
+                          Forgot password
                         </a>
                       </div>
                     </div>

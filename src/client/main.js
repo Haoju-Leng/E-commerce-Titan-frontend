@@ -13,14 +13,16 @@ import { Header } from "./components/header.js";
 import { Login } from "./components/login.js";
 import { Logout } from "./components/logout.js";
 import { Register } from "./components/register.js";
-
-import { ItemDetail } from "./components/ItemDetail.js";
-import { Profile } from "./components/profile.js";
+//import { ItemDetail } from "./components/ItemDetail.js";
 
 // import { Start } from "./components/start.js";
 import { Cart } from "./components/cart.js";
 import { Publish } from "./components/publish.js";
 import { EditProfile } from "./components/editProfile.js";
+import {Order} from "./components/order.js";
+import {PostedItems} from "./components/postedItems";
+import {ForgotPassword} from "./components/forgotPassword";
+import {SetNewPassword} from "./components/setNewPassword";
 // import { MoveDetail } from "./components/moveDetail.js";
 
 const defaultUser = {
@@ -38,7 +40,7 @@ const defaultUser = {
  * @constructor
  */
 const ReqUser = ({ user, children }) =>
-  !user || user.username === "" ? (
+  !user || user.firstName === "" ? (
     <Navigate to={"/login"} replace={true} />
   ) : (
     children
@@ -70,6 +72,13 @@ const CheckCart = ({ loggedIn, state }) =>
         <Navigate to={`/login`} replace={true} />
     ) : (
         <Cart user={state}/>
+    );
+
+const CheckOrder = ({ loggedIn, state }) =>
+    loggedIn === "" ? (
+        <Navigate to={`/login`} replace={true} />
+    ) : (
+        <Order user={state}/>
     );
 
 /***
@@ -120,12 +129,12 @@ const MyApp = () => {
                         }
                     />
                     <Route path="/post" element={<CheckPublish loggedIn={loggedIn()} state={state} />} />
-                    <Route path="/item/:id" element={<ItemDetail user={state} />} />
+                    {/*<Route path="/item/:id" element={<ItemDetail user={state} />} />*/}
                     <Route path="/cart" element={<CheckCart loggedIn={loggedIn()} state={state} />} />
                     {/*<Route path="/edit/:username" element={<EditProfile currentUser={state.username} />} />*/}
                     <Route
                         path="/profile"
-                        element={<Profile currentUser={state.username} />}
+                        element={<ReqUser user={state} children={<EditProfile user={state}/>}/>}
                     />
                     {/*<Route*/}
                     {/*    path="/start"*/}
@@ -135,6 +144,10 @@ const MyApp = () => {
                     {/*        </ReqUser>*/}
                     {/*    }*/}
                     {/*/>*/}
+                    <Route path="/orders" element={<CheckOrder loggedIn={loggedIn()} state={state} />} />
+                    <Route path="/postedItems" element={<ReqUser user={state} children={<PostedItems user={state}/>}/>}/>
+                    <Route path="/forgotPassword" element={<ForgotPassword />}/>}/>
+                    <Route path="/setNewPassword/:email" element={<SetNewPassword />}/>}/>
 
 
 
