@@ -98,7 +98,7 @@ export const Publish = ({ user }) => {
     unitStock: "",
   });
 
-  let [priceError, setPriceError] = useState("");
+  // let [priceError, setPriceError] = useState("");
   let [unitError, setUnitError] = useState("");
   let [nameError, setNameError] = useState("");
   let [submitError, setSubmitError] = useState("");
@@ -110,74 +110,78 @@ export const Publish = ({ user }) => {
     document.getElementById("productName").focus();
   }, []);
 
-  const onChange = (ev) => {
-    // setPwdError("");
-    // setUserError("");
-    // setAddressError("");
-    setNameError("");
-    // Update from form and clear errors
-    setState({
-      ...state,
-      [ev.target.id]: ev.target.value,
-    });
-    // Make sure the price is valid
-    if (ev.target.id === "productPrice") {
-      let priceInvalid = /^\d+$/.test(ev.target.value);
-      if (!priceInvalid) {
-        setPriceError(`Error: price must be a number`);
-      } else {
-        setPriceError("");
-      }
-    }
-    // Make sure unitStock is valid
-    else if (ev.target.id === "unitStock") {
-      let unitInvalid = /^\d+$/.test(ev.target.value);
-      if (!unitInvalid) {
-        setUnitError(`Error: Number of products must be a number`);
-      } else {
-        setUnitError("");
-      }
-    }
-  };
+  // const onChange = (ev) => {
+  //   // setPwdError("");
+  //   // setUserError("");
+  //   // setAddressError("");
+  //   setNameError("");
+  //   // Update from form and clear errors
+  //   setState({
+  //     ...state,
+  //     [ev.target.id]: ev.target.value,
+  //   });
+  //   // Make sure the price is valid
+  //   if (ev.target.id === "productPrice") {
+  //     let priceInvalid = /^\d+$/.test(ev.target.value);
+  //     if (!priceInvalid) {
+  //       setPriceError(`Error: price must be a number`);
+  //     } else {
+  //       setPriceError("");
+  //     }
+  //   }
+  //   // Make sure unitStock is valid
+  //   else if (ev.target.id === "unitStock") {
+  //     let unitInvalid = /^\d+$/.test(ev.target.value);
+  //     if (!unitInvalid) {
+  //       setUnitError(`Error: Number of products must be a number`);
+  //     } else {
+  //       setUnitError("");
+  //     }
+  //   }
+  // };
 
 
-    // let [priceError, setPriceError] = useState("");
+
+    let [priceError, setPriceError] = useState("");
+
     // let [unitError, setUnitError] = useState("");
     // let [nameError, setNameError] = useState("");
     // let [submitError, setSubmitError] = useState("");
     // let [image, setImage] = useState({});
     // let [published, setPublished] = useState(false);
     // let [itemID, setItemID] = useState("");
-    //
-    // useEffect(() => {
-    //     document.getElementById("productName").focus();
-    // }, []);
-    //
-    // const onChange = (ev) => {
-    //     // setPwdError("");
-    //     // setUserError("");
-    //     // setAddressError("");
-    //     setNameError("");
-    //     // Update from form and clear errors
-    //     setState({
-    //         ...state,
-    //         [ev.target.id]: ev.target.value,
-    //     });
-    //     // Make sure the price is valid
-    //     if (ev.target.id === "productPrice") {
-    //         let priceInvalid = /^\d+$/.test(ev.target.value);
-    //         if (!priceInvalid) {setPriceError(`Error: price must be a number`)}
-    //         else {setPriceError("");}
-    //     }
-    //     // Make sure unitStock is valid
-    //     else if (ev.target.id === "unitStock") {
-    //         let unitInvalid = /^\d+$/.test(ev.target.value);
-    //         if (!unitInvalid) {setUnitError(`Error: Number of products must be a number`)}
-    //         else{
-    //             setUnitError("");
-    //         }
-    //     }
-    // };
+
+
+    useEffect(() => {
+        document.getElementById("productName").focus();
+    }, []);
+
+    const onChange = (ev) => {
+        // setPwdError("");
+        // setUserError("");
+        // setAddressError("");
+        setNameError("");
+        // Update from form and clear errors
+        setState({
+            ...state,
+            [ev.target.id]: ev.target.value,
+        });
+        // Make sure the price is valid
+        if (ev.target.id === "productPrice") {
+            let priceInvalid = /^\d+$/.test(ev.target.value);
+            if (!priceInvalid) {setPriceError(`Error: price must be a number`)}
+            else {setPriceError("");}
+        }
+        // Make sure unitStock is valid
+        else if (ev.target.id === "unitStock") {
+            let unitInvalid = /^\d+$/.test(ev.target.value);
+            if (!unitInvalid) {setUnitError(`Error: Number of products must be a number`)}
+            else{
+                setUnitError("");
+            }
+        }
+    };
+
 
     const setImageState = (ev) => {
         let tmp = {};
