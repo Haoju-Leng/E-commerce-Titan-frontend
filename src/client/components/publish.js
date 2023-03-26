@@ -43,7 +43,7 @@ const PopupButton = styled.button`
   margin-bottom: 10px;
 `;
 
-const ErrorMessage = ({ msg = "", hide = false }) => {
+export const ErrorMessage = ({ msg = "", hide = false }) => {
   return (
     <ErrorBase style={{ display: hide ? "none" : "inherit" }}>{msg}</ErrorBase>
   );
@@ -141,13 +141,16 @@ export const Publish = ({ user }) => {
   // };
 
 
+
     let [priceError, setPriceError] = useState("");
+
     // let [unitError, setUnitError] = useState("");
     // let [nameError, setNameError] = useState("");
     // let [submitError, setSubmitError] = useState("");
     // let [image, setImage] = useState({});
     // let [published, setPublished] = useState(false);
     // let [itemID, setItemID] = useState("");
+
 
     useEffect(() => {
         document.getElementById("productName").focus();
@@ -179,6 +182,7 @@ export const Publish = ({ user }) => {
         }
     };
 
+
     const setImageState = (ev) => {
         let tmp = {};
         for (let i = 0; i < ev.target.files.length; i++) {
@@ -204,19 +208,30 @@ export const Publish = ({ user }) => {
                 formData.append(`image${i}`, image[`image${i}`]);
             }
 
-            formData.append('productInfo', JSON.stringify({
+            // formData.append('productInfo', JSON.stringify({
+            //     productCategory: state.productCategory,
+            //     description: state.productDescription,
+            //     manufacturer: state.productManufacturer,
+            //     name: state.productName,
+            //     price: state.productPrice,
+            //     stock: state.unitStock
+            // }));
+
+            formData.append('productInfo', new Blob([JSON.stringify({
                 productCategory: state.productCategory,
                 description: state.productDescription,
                 manufacturer: state.productManufacturer,
                 name: state.productName,
                 price: state.productPrice,
-                stock: state.unitStock
+                stock: state.unitStock,
+            })], {
+                type: "application/json"
             }));
+            console.log(state.productPrice);
             // for (var key of formData.entries())
             // {
             //     console.log(key[0] + ', ' + key[1])
             // }
-            console.log(user.token);
             let res = await fetch("http://localhost:8080/api/v1/product/", { //TODO: update API
                 body: formData,
                 method: "POST",
@@ -235,6 +250,47 @@ export const Publish = ({ user }) => {
         }
 
     };
+
+    let tmp = {
+        productCategory: "books",
+        description: "books",
+        manufacturer: "books",
+        name: "books",
+        price: 10,
+        stock: 2
+    }
+    const onClick = async () => {
+        let res = await fetch("http://localhost:8080/api/v1/cart/add", {
+            body: JSON.stringify({
+                items: [tmp],
+                userId: 123
+            }),
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "Authorization": `Bearer ${user.token}`
+            },
+        });
+
+        if (res.ok) {
+            console.log("ok");
+        } else {
+            console.log("not ok");
+        }
+    }
+    const onClick2 = async () => {
+        let res = await fetch("http://localhost:8080/api/v1/cart", {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            },
+        });
+        const data = await res.json();
+        if(res.ok){
+            console.log(data);
+        }else{
+            console.log(res);
+        }
+    }
 
 
   return (
