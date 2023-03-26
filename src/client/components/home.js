@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import "./CSS/home.css";
 
 export const Home = ({user}) => {
   let [products, setProducts] = useState({});
@@ -113,22 +114,54 @@ export const Home = ({user}) => {
     // console.log(products[i].name)
     // console.log(imglist.products[i].name);
     return (
-      <div key={products[i].id} className="col-3">
-        <img
+      // <div key={products[i].id} className="col-3">
+      //   <img
+      //     src={imglist[products[i].name]}
+      //     width="200" 
+      //     height="150"
+      //   />
+      //   <a
+      //     href=""
+      //     onClick={(id = "") => redirect(event, (id = products[i].id))}
+      //   >
+      //     {products[i].name}
+      //   </a>
+      //   {/* // onClick={(pil = "") => onClick(event, (pil = "stack1"))}
+        // onClick={(products[i].id)=> onClick(event, id = products[i].id) } 
+      //   */}
+      // </div>
+
+<div className="col-md-3">
+        <div className="ibox">
+            <div className="ibox-content product-box">
+                <div className="product-imitation">
+                <img
           src={imglist[products[i].name]}
           width="200" 
           height="150"
         />
-        <a
-          href=""
-          onClick={(id = "") => redirect(event, (id = products[i].id))}
-        >
-          {products[i].name}
-        </a>
-        {/* // onClick={(pil = "") => onClick(event, (pil = "stack1"))}
-        onClick={(products[i].id)=> onClick(event, id = products[i].id) } 
-        */}
-      </div>
+                </div>
+                <div className="product-desc">
+                    <span className="product-price">
+                        ${products[i].price}
+                    </span>
+                    <small className="text-muted">{products[i].name}</small>
+                    <a href="#" className="product-name"> {products[i].productCategory}</a>
+
+                    <div className="small m-t-xs">
+                    {products[i].description}
+                    </div>
+                    <div className="m-t text-righ">
+
+                        <a href="#" class="btn btn-xs btn-outline btn-primary" onClick={(id = "") => redirect(event, (id = products[i].id))}>Info <i class="fa fa-long-arrow-right"></i> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     );
   });
 
@@ -136,6 +169,13 @@ export const Home = ({user}) => {
     <div className="container">
       <h1>Welcome to E-Commerence Titan!!!!!!!!!</h1>
       <div className="row">{productList}</div>
+   
     </div>
   );
 };
+
+
+
+
+
+

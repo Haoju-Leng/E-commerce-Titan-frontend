@@ -9,7 +9,7 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import "./CSS/item.css";
+import "./CSS/items.css";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
@@ -113,7 +113,7 @@ export const ItemDetail = ({ user }) => {
   //       console.log('below')
   //       console.log(images)
   //       // return <img src={i}></img>
-  //       return <div className="each-slide-effect">
+  //       return <div classNameName="each-slide-effect">
   //       <div>
   //       <img src={`url(${images[1]})`} />
   //       </div>
@@ -128,6 +128,27 @@ export const ItemDetail = ({ user }) => {
 //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFa_dn5H8CisPpDmFK7wX8-QD36ea21hzZkA&usqp=CAU",
 //     "data:image/jpeg;base64,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",
 //   ];
+const newImages =  images.map(i =>  {console.log(i, "this is inside the new image=================="); return (<div className="item active">
+
+
+<img src={i} className="img-responsive" alt="" />
+</div>
+)})
+const check = ( <div className="item active">
+
+
+<img  className="img-responsive" alt="" />
+</div>)
+
+
+const check2 =()=> {for (let i = 0; i < 10; i++) {
+return ( <div className="item active">
+
+
+<img  className="img-responsive" alt="" />
+</div>)
+
+}} 
 let test = () => {
 
 
@@ -177,51 +198,201 @@ slideImages = [
   test2()
 ];
 
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-4">
 
-        <div className="slide-container">
-        <Slide>
-        {slideImages.map((slideImage, index)=> { if (slideImage && Object.keys(slideImage).length !== 0) {
-          console.log("this is the slideimga")
-          console.log(slideImage ==={})
-          console.log(Object.keys(slideImage).length === 0)
-          return <div key={index}>
-          <div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
-            <span style={spanStyle}>{slideImage.caption}</span>
-          </div>
+  return (<div className="container">
+    {/* <!-- product --> */}
+    <div className="product-content product-wrap clearfix product-deatil">
+        <div className="row">
+            <div className="col-md-5 col-sm-12 col-xs-12">
+                <div className="product-image">
+                    <div id="myCarousel-2" className="carousel slide">
+                        <ol className="carousel-indicators">
+                            <li data-target="#myCarousel-2" data-slide-to="0" className=""></li>
+                            <li data-target="#myCarousel-2" data-slide-to="1" className="active"></li>
+                            <li data-target="#myCarousel-2" data-slide-to="2" className=""></li>
+                        </ol>
+                        <div className="carousel-inner">
+                            {/* <!-- Slide 1 --> */}
+                            {newImages}
+                            <div className="item active">
+                                <img src={images[0]} className="img-responsive" alt="" />
+                            </div>
+                            {/* <!-- Slide 2 --> */}
+                            <div className="item">
+                                <img src="https://www.bootdey.com/image/700x400/87CEFA/000000" className="img-responsive" alt="" />
+                            </div>
+                            {/* <!-- Slide 3 --> */}
+                            <div className="item">
+                                <img src="https://www.bootdey.com/image/700x400/B0C4DE/000000" className="img-responsive" alt="" />
+                            </div>
+                        </div>
+                        <a className="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span className="glyphicon glyphicon-chevron-left"></span> </a>
+                        <a className="right carousel-control" href="#myCarousel-2" data-slide="next"> <span className="glyphicon glyphicon-chevron-right"></span> </a>
+                    </div>
+                </div>
+            </div>
+
+            <div className="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
+                <h2 className="name">
+                {item.name}
+                    <small>Product by <a href="javascript:void(0);">Adeline</a></small>
+                    <i className="fa fa-star fa-2x text-primary"></i>
+                    <i className="fa fa-star fa-2x text-primary"></i>
+                    <i className="fa fa-star fa-2x text-primary"></i>
+                    <i className="fa fa-star fa-2x text-primary"></i>
+                    <i className="fa fa-star fa-2x text-muted"></i>
+                    <span className="fa fa-2x"><h5>(109) Votes</h5></span>
+                    <a href="javascript:void(0);">109 customer reviews</a>
+                </h2>
+                <hr />
+                <h3 className="price-container">
+                    ${item.price}
+                    <small>*includes tax</small>
+                </h3>
+                <div className="certified">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0);">Delivery time<span>7 Working Days</span></a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <hr />
+                <div className="description description-tabs">
+                    <ul id="myTab" className="nav nav-pills">
+                        <li className="active"><a href="#more-information" data-toggle="tab" className="no-margin">Product Description </a></li>
+                        <li className=""><a href="#specifications" data-toggle="tab">Specifications</a></li>
+                        <li className=""><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                    </ul>
+                    <div id="myTabContent" className="tab-content">
+
+                     
+                            <strong>Description Title</strong>
+                            <p  style={{ color: 'red !important' }}>
+                                {item.description}
+                            </p>
+                            <div className="tab-pane fade active in" id="more-information">
+                            <br />
+                        </div>
+                        <div className="tab-pane fade" id="specifications">
+                            <br />
+                            <dl className="" style={{ color: 'red !important' }}>
+                                <dt>Gravina</dt>
+                                <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+                                <dd>Donec id elit non mi porta gravida at eget metus.</dd>
+                                <dd>Eget lacinia odio sem nec elit.</dd>
+                                <br />
+
+                                <dt>Test lists</dt>
+                                <dd>A description list is perfect for defining terms.</dd>
+                                <br />
+
+                                <dt>Altra porta</dt>
+                                <dd>Vestibulum id ligula porta felis euismod semper</dd>
+                            </dl>
+                        </div>
+                        <div className="tab-pane fade" id="reviews">
+                            <br />
+                            <form method="post" className="well padding-bottom-10" onsubmit="return false;">
+                                <textarea rows="2" className="form-control" placeholder="Write a review"></textarea>
+                                <div className="margin-top-10">
+                                    <button type="submit" className="btn btn-sm btn-primary pull-right">
+                                        Submit Review
+                                    </button>
+                                    <a href="javascript:void(0);" className="btn btn-link profile-link-btn" rel="tooltip" data-placement="bottom" title="" data-original-title="Add Location"><i className="fa fa-location-arrow"></i></a>
+                                    <a href="javascript:void(0);" className="btn btn-link profile-link-btn" rel="tooltip" data-placement="bottom" title="" data-original-title="Add Voice"><i className="fa fa-microphone"></i></a>
+                                    <a href="javascript:void(0);" className="btn btn-link profile-link-btn" rel="tooltip" data-placement="bottom" title="" data-original-title="Add Photo"><i className="fa fa-camera"></i></a>
+                                    <a href="javascript:void(0);" className="btn btn-link profile-link-btn" rel="tooltip" data-placement="bottom" title="" data-original-title="Add File"><i className="fa fa-file"></i></a>
+                                </div>
+                            </form>
+
+                            <div className="chat-body no-padding profile-message">
+                                <ul>
+                                    <li className="message">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="online" />
+                                        <span className="message-text">
+                                            <a href="javascript:void(0);" className="username">
+                                                Alisha Molly
+                                                <span className="badge">Purchase Verified</span>
+                                                <span className="pull-right">
+                                                    <i className="fa fa-star fa-2x text-primary"></i>
+                                                    <i className="fa fa-star fa-2x text-primary"></i>
+                                                    <i className="fa fa-star fa-2x text-primary"></i>
+                                                    <i className="fa fa-star fa-2x text-primary"></i>
+                                                    <i className="fa fa-star fa-2x text-muted"></i>
+                                                </span>
+                                            </a>
+                                            Can't divide were divide fish forth fish to. Was can't form the, living life grass darkness very image let unto fowl isn't in blessed fill life yielding above all moved
+                                        </span>
+                                        <ul className="list-inline font-xs">
+                                            <li>
+                                                <a href="javascript:void(0);" className="text-info"><i className="fa fa-thumbs-up"></i> This was helpful (22)</a>
+                                            </li>
+                                            <li className="pull-right">
+                                                <small className="text-muted pull-right ultra-light"> Posted 1 year ago </small>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li className="message">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" className="online" />
+                                        <span className="message-text">
+                                            <a href="javascript:void(0);" className="username">
+                                                Aragon Zarko
+                                                <span className="badge">Purchase Verified</span>
+                                                <span className="pull-right">
+                                                    <i className="fa fa-star fa-2x text-primary"></i>
+                                                    <i className="fa fa-star fa-2x text-primary"></i>
+                                                    <i className="fa fa-star fa-2x text-primary"></i>
+                                                    <i className="fa fa-star fa-2x text-primary"></i>
+                                                    <i className="fa fa-star fa-2x text-primary"></i>
+                                                </span>
+                                            </a>
+                                            Excellent product, love it!
+                                        </span>
+                                        <ul className="list-inline font-xs">
+                                            <li>
+                                                <a href="javascript:void(0);" className="text-info"><i className="fa fa-thumbs-up"></i> This was helpful (22)</a>
+                                            </li>
+                                            <li className="pull-right">
+                                                <small className="text-muted pull-right ultra-light"> Posted 1 year ago </small>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div className="row">
+                    <div className="col-sm-12 col-md-6 col-lg-6">
+                        <a href="javascript:void(0);" className="btn btn-success btn-lg">Add to cart (${item.price})</a>
+                    </div>
+                    <div className="col-sm-12 col-md-6 col-lg-6">
+                        <div className="btn-group pull-right">
+                            <button className="btn btn-white btn-default"><i className="fa fa-star"></i> Add to wishlist</button>
+                            <button className="btn btn-white btn-default"><i className="fa fa-envelope"></i> Contact Seller</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        }
-            
-          })} 
-
-        </Slide>
-      </div>
-
-
-         
-        </div>
-        <div className="col-1"></div>
-        <div className="col-7">
-          <h1>{item.name}</h1>
-          <h2>about this item:</h2>
-          <p>{item.description}</p>
-          <p>{item.manufacturer}</p>
-
-          <h2>price of this item</h2>
-          <p>{item.price}</p>
-          <h2>stock</h2>
-          <p>{item.stock}</p>
-          <button className="btn btn-primary" onClick={handleButtonAddCart}>
-            Add to Cart
-          </button>
-
-          
-        </div>
-      </div>
     </div>
+    {/* <!-- end product --> */}
+</div>
+
+
+
+
+
+
+
+
+
+
+    
   );
 };
 
@@ -242,8 +413,8 @@ slideImages = [
 
 // function showSlides(n) {
 //   let i;
-//   let slides = document.getElementsByClassName("mySlides");
-//   let dots = document.getElementsByClassName("demo");
+//   let slides = document.getElementsByclassNameName("mySlides");
+//   let dots = document.getElementsByclassNameName("demo");
 //   let captionText = document.getElementById("caption");
 //   if (n > slides.length) {slideIndex = 1}
 //   if (n < 1) {slideIndex = slides.length}
@@ -251,66 +422,111 @@ slideImages = [
 //     slides[i].style.display = "none";
 //   }
 //   for (i = 0; i < dots.length; i++) {
-//     dots[i].className = dots[i].className.replace(" active", "");
+//     dots[i].classNameName = dots[i].classNameName.replace(" active", "");
 //   }
 //   slides[slideIndex-1].style.display = "block";
-//   dots[slideIndex-1].className += " active";
+//   dots[slideIndex-1].classNameName += " active";
 //   captionText.innerHTML = dots[slideIndex-1].alt;
 // }
 
-//     return <div className="container ">
-//         <div className="row">
-//             <div className="col-sm">
+//     return <div classNameName="container ">
+//         <div classNameName="row">
+//             <div classNameName="col-sm">
 //             <img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600"></img>
 
 //             </div>
-//             <div className="col-sm">divbb</div>
+//             <div classNameName="col-sm">divbb</div>
 
 //         </div>
 //         hello world
 
 // {/* // <!-- Container for the image gallery --> */}
-// <div className="container">
+// <div classNameName="container">
 
 //   {/* <!-- Full-width images with number text --> */}
-//   <div className="mySlides">
-//     <div className="numbertext">1 / 3</div>
+//   <div classNameName="mySlides">
+//     <div classNameName="numbertext">1 / 3</div>
 //       <img src="img_woods_wide.jpg" width="100%"/>
 //   </div>
 
-//   <div className="mySlides">
-//     <div className="numbertext">2 / 3</div>
+//   <div classNameName="mySlides">
+//     <div classNameName="numbertext">2 / 3</div>
 //       <img src="img_5terre_wide.jpg" width="100%"/>
 //   </div>
 
-//   <div className="mySlides">
-//     <div className="numbertext">3 / 3</div>
+//   <div classNameName="mySlides">
+//     <div classNameName="numbertext">3 / 3</div>
 //       <img src="img_mountains_wide.jpg" width="100%"/>
 //   </div>
 
 //   {/* <!-- Next and previous buttons --> */}
-//   <a className="prev" onClick={() => setSlideNum(prevState => prevState - 1)}>&#10094;</a>
-//   <a className="next" onClick={() => setSlideNum(prevState => prevState + 1)}>&#10095;</a>
+//   <a classNameName="prev" onClick={() => setSlideNum(prevState => prevState - 1)}>&#10094;</a>
+//   <a classNameName="next" onClick={() => setSlideNum(prevState => prevState + 1)}>&#10095;</a>
 
 // {/* //   {(pil = "") => onClick(event, pil = "stack1")}  */}
 //   {/* <!-- Image text --> */}
-//   <div className="caption-container">
+//   <div classNameName="caption-container">
 //     <p id="caption"></p>
 //   </div>
 
 //   {/* <!-- Thumbnail images --> */}
-//   <div className="row">
-//     <div className="column">
-//       <img className="demo cursor" src="img_woods.jpg" width="100%" onClick="currentSlide(1)" alt="The Woods"/>
+//   <div classNameName="row">
+//     <div classNameName="column">
+//       <img classNameName="demo cursor" src="img_woods.jpg" width="100%" onClick="currentSlide(1)" alt="The Woods"/>
 //     </div>
-//     <div className="column">
-//       <img className="demo cursor" src="img_5terre.jpg" width="100%" onClick="currentSlide(2)" alt="Cinque Terre"/>
+//     <div classNameName="column">
+//       <img classNameName="demo cursor" src="img_5terre.jpg" width="100%" onClick="currentSlide(2)" alt="Cinque Terre"/>
 //     </div>
-//     <div className="column">
-//       <img className="demo cursor" src="img_mountains.jpg" width="100%" onClick="currentSlide(3)" alt="Mountains and fjords"/>
+//     <div classNameName="column">
+//       <img classNameName="demo cursor" src="img_mountains.jpg" width="100%" onClick="currentSlide(3)" alt="Mountains and fjords"/>
 //     </div>
 
 //   </div>
 //   {slideNum}
 // </div>
 // </div>
+
+
+////
+
+{/* <div classNameName="container">
+<div classNameName="row">
+  <div classNameName="col-4">
+
+  <div classNameName="slide-container">
+  <Slide>
+  {slideImages.map((slideImage, index)=> { if (slideImage && Object.keys(slideImage).length !== 0) {
+    console.log("this is the slideimga")
+    console.log(slideImage ==={})
+    console.log(Object.keys(slideImage).length === 0)
+    return <div key={index}>
+    <div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
+      <span style={spanStyle}>{slideImage.caption}</span>
+    </div>
+  </div>
+  }
+      
+    })} 
+
+  </Slide>
+</div> </div>
+        <div classNameName="col-1"></div>
+        <div classNameName="col-7">
+          <h1>{item.name}</h1>
+          <h2>about this item:</h2>
+          <p>{item.description}</p>
+          <p>{item.manufacturer}</p>
+
+          <h2>price of this item</h2>
+          <p>{item.price}</p>
+          <h2>stock</h2>
+          <p>{item.stock}</p>
+          <button classNameName="btn btn-primary" onClick={handleButtonAddCart}>
+            Add to Cart
+          </button>
+
+          
+        </div>
+
+ */}
+
