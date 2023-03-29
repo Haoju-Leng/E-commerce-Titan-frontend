@@ -9,7 +9,7 @@ export const Home = ({user}) => {
   useEffect(() => {
 
     const geturl = async(lastDigit, imgKey) => {
-        await fetch("http://localhost:8080/api/v1/product/file/" + lastDigit, {headers: {
+        await fetch("http://localhost:8080/api/v1/products/file/" + lastDigit, {headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${user.token}`,
           }} ).then(response => response.blob())
@@ -32,7 +32,7 @@ export const Home = ({user}) => {
 
 
     const getProduct = async () => {
-      const response = await fetch("http://localhost:8080/api/v1/product/" , {headers: {
+      const response = await fetch("http://localhost:8080/api/v1/products" , {headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${user.token}`,
       }});
