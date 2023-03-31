@@ -57,7 +57,7 @@ export const ItemDetail = ({ user }) => {
 
             upstate.push(URL.createObjectURL(imageBlob).toString());
             //upstate.push({url: URL.createObjectURL(imageBlob).toString(), caption: "pic"});
-            setSlideImages(upstate)
+            //setSlideImages(upstate)
             setImages([...upstate]);
 
 
@@ -85,22 +85,25 @@ export const ItemDetail = ({ user }) => {
         stock: data.stock,
       });
     };
-
     
     // console.log(geturl(2)); 
     getProduct();
   }, []);
   const handleButtonAddCart = (e) => {
     let addToCart = async () => {
-      await fetch(`http://localhost:8080/api/v1/cart/add`, {
+      await fetch(`http://localhost:8080/api/v1/cart/add?productId=${item.id}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": 'application/json',
           "Authorization": `Bearer ${user.token}`,
         },
-        body: JSON.stringify(item),
-      }).then((data) => {
-        return data.json();
+          body: JSON.stringify({dumpy: 'tmp'})
+      }).then((res) => {
+        if(res.ok){
+            console.log('Do something'); //TODO: handle add cart response
+        }else{
+            console.log('Pops error');
+        }
       });
     };
     addToCart();
