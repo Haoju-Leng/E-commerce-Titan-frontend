@@ -6,17 +6,22 @@
   "type": "module",
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.12.1",
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
+    "@cometchat-pro/chat": "^3.0.11",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.15",
     "@mui/styled-engine-sc": "^5.11.9",
+    "@twemoji/api": "^14.1.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^5.2.3",
     "css-loader": "^6.7.3",
+    "dateformat": "^4.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "file-loader": "^6.2.0",
     "formidable": "^2.1.2",
+    "html-react-parser": "^1.4.5",
     "joi": "^17.3.0",
     "md5": "^2.3.0",
     "mongoose": "^6.0.12",
@@ -25,13 +30,14 @@
     "pug": "^3.0.0",
     "puppeteer": "^19.2.1",
     "react-bootstrap": "^2.7.0",
-    "react-dropdown": "^1.11.0",
+    "react-scripts": "^4.0.3",
     "react-slideshow-image": "^4.2.1",
     "reactjs-popup": "^2.0.5",
     "serve-favicon": "^2.5.0",
     "simple-env-config": "^1.0.1",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.6",
+    "svg-url-loader": "^8.0.0",
     "webpack": "^5.61.0",
     "webpack-cli": "^4.9.1"
   },
@@ -49,6 +55,7 @@
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
+    "@svgr/webpack": "^7.0.0",
     "async": "^3.2.0",
     "babel-loader": "^9.0.1",
     "chai": "^4.2.0",
@@ -61,6 +68,16 @@
     "react-router": "^6.4.3",
     "react-router-dom": "^6.4.3",
     "should": "^13.2.3",
-    "superagent": "^8.0.3"
+    "superagent": "^8.0.3",
+    "web-vitals": "^3.0.4",
+    "jest": "26.6.0",
+    "jest-canvas-mock": "^2.3.1",
+    "babel-jest": "26.6.0"
+  },
+
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|scss|png|svg|pdf|jpg|jpeg|wav)$": "<rootDir>/src/resources/__mocks__/fileMock.js"
+    }
   }
 }

@@ -33,6 +33,17 @@ export default {
           fullySpecified: false
         }
       },
+      {
+        test: /\.(ogg|mp3|png|wav|mpe?g)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]'
+        }
+      },
+      {
+        test: /\.svg$/,
+        type: "asset/resource",
+      },
     ]
   }
 };

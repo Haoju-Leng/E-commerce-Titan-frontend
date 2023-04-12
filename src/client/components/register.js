@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import md5 from "md5";
 import {validEmail, validPassword} from "../../shared/index.js";
+import { CometChat } from "@cometchat-pro/chat";
+import {AUTH_KEY} from "../../shared/constant.js";
 
 const ErrorBase = styled.div`
   grid-column: 1 / 3;
@@ -88,7 +90,12 @@ export const Register = (props) => {
                 email: state.email,
                 password: hashedPassword,
                 firstName: state.firstName,
-                lastName: state.lastName
+                lastName: state.lastName,
+                address: state.address,
+                city: state.city,
+                state: state.state,
+                country: state.country,
+                zipcode: state.zipcode
             }),
             method: "POST",
             headers: {
@@ -98,6 +105,35 @@ export const Register = (props) => {
         const data = await res.json();
         if (res.ok) {
             props.logIn(data);
+            let authKey = AUTH_KEY;
+            let uid = state.email.replace("@vanderbilt.edu", "").replaceAll(".", "_");
+            let name = `${state.firstName} ${state.lastName} (${state.email})`;
+
+            let user = new CometChat.User(uid);
+
+            user.setName(name);
+
+            CometChat.createUser(user, authKey).then(
+                user => {
+                    console.log("user created", user);
+                    CometChat.login(uid, authKey).then(
+                        data => {
+                            console.log("User logged in", data);
+                        },
+                        error => {
+                            console.log("Login failed with exception:", { error });
+                        });
+                },error => {
+                    console.log("error", error);
+                    CometChat.login(uid, authKey).then(
+                        data => {
+                            console.log("User logged in", data);
+                        },
+                        error => {
+                            console.log("Login failed with exception:", { error });
+                        });
+                }
+            )
             navigate(`/home`);
         } else {
             setPwdError(`Error: ${data.error}`);

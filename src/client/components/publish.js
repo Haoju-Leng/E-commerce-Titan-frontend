@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {Fragment, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
 
@@ -87,6 +87,10 @@ const OkButton = (props) => {
   );
 };
 
+const Preview = ({images}) => {
+    return Object.values(images).map((url, index) =>  <img key={index} src={url} style={{width: '100px', height: '100px'}}/>);
+}
+
 export const Publish = ({ user }) => {
   let navigate = useNavigate();
   let [state, setState] = useState({
@@ -95,7 +99,7 @@ export const Publish = ({ user }) => {
     productDescription: "",
     productManufacturer: "",
     productPrice: "",
-    unitStock: "",
+    unitStock: "1",
   });
 
   // let [priceError, setPriceError] = useState("");
@@ -105,10 +109,19 @@ export const Publish = ({ user }) => {
   let [image, setImage] = useState({});
   let [published, setPublished] = useState(false);
   let [itemID, setItemID] = useState("");
+  let [preview, setPreview] = useState({});
 
   useEffect(() => {
-    document.getElementById("productName").focus();
-  }, []);
+      if (image === undefined) {
+          setPreview(undefined)
+          return
+      }
+      let images = {}
+      for(let i = 0; i < Object.keys(image).length;i++){
+          images[`image${i}`] = URL.createObjectURL(image[`image${i}`]);
+      }
+      setPreview(images);
+  }, [image]);
 
   // const onChange = (ev) => {
   //   // setPwdError("");
@@ -152,10 +165,6 @@ export const Publish = ({ user }) => {
     // let [itemID, setItemID] = useState("");
 
 
-    useEffect(() => {
-        document.getElementById("productName").focus();
-    }, []);
-
     const onChange = (ev) => {
         // setPwdError("");
         // setUserError("");
@@ -195,6 +204,7 @@ export const Publish = ({ user }) => {
     const onSubmit = async (ev) => {
         ev.preventDefault();
 
+
         if(state.productName === ""){
             setNameError("Error: product name can't be empty")
         }else if(state.productPrice === ""){
@@ -203,7 +213,6 @@ export const Publish = ({ user }) => {
             setUnitError("Error: Number of product can't be empty")
         }else if(priceError === "" && unitError === "" && nameError === ""){
             const formData = new FormData();
-
             for (let i = 0; i < Object.keys(image).length; i++) {
                 formData.append(`image${i}`, image[`image${i}`]);
             }
@@ -251,48 +260,6 @@ export const Publish = ({ user }) => {
 
     };
 
-    let tmp = {
-        productCategory: "books",
-        description: "books",
-        manufacturer: "books",
-        name: "books",
-        price: 10,
-        stock: 2
-    }
-    const onClick = async () => {
-        let res = await fetch("http://localhost:8080/api/v1/cart/add", {
-            body: JSON.stringify({
-                items: [tmp],
-                userId: 123
-            }),
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                "Authorization": `Bearer ${user.token}`
-            },
-        });
-
-        if (res.ok) {
-            console.log("ok");
-        } else {
-            console.log("not ok");
-        }
-    }
-    const onClick2 = async () => {
-        let res = await fetch("http://localhost:8080/api/v1/cart", {
-            headers: {
-                "Authorization": `Bearer ${user.token}`
-            },
-        });
-        const data = await res.json();
-        if(res.ok){
-            console.log(data);
-        }else{
-            console.log(res);
-        }
-    }
-
-
   return (
     <Fragment>
       {published && (
@@ -328,11 +295,10 @@ export const Publish = ({ user }) => {
                   ></textarea>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="productCategory">Item Category</label> TODO:
-                  multiselect or single select
+                  <label htmlFor="productCategory">Item Category</label>
                   <div>
-                    <label style={{ fontSize: "1em" }}>
-                      <RadioInput
+                    <label style={{ fontSize: "0.5em" }}>
+                      <RadioInput id="productCategory"
                         onChange={onChange}
                         value={"books"}
                         checked={true}
@@ -341,8 +307,8 @@ export const Publish = ({ user }) => {
                     </label>
                   </div>
                   <div>
-                    <label style={{ fontSize: "1em" }}>
-                      <RadioInput
+                    <label style={{ fontSize: "0.5em" }}>
+                      <RadioInput id="productCategory"
                         onChange={onChange}
                         value={"electronics"}
                         checked={false}
@@ -350,9 +316,69 @@ export const Publish = ({ user }) => {
                       Electronics
                     </label>
                   </div>
+                    <div>
+                        <label style={{ fontSize: "0.5em" }}>
+                            <RadioInput id="productCategory"
+                                        onChange={onChange}
+                                        value={"apparel"}
+                                        checked={false}
+                            />
+                            apparel
+                        </label>
+                    </div>
+                    <div>
+                        <label style={{ fontSize: "0.5em" }}>
+                            <RadioInput id="productCategory"
+                                        onChange={onChange}
+                                        value={"free stuff"}
+                                        checked={false}
+                            />
+                            Free Stuff
+                        </label>
+                    </div>
+                    <div>
+                        <label style={{ fontSize: "0.5em" }}>
+                            <RadioInput id="productCategory"
+                                        onChange={onChange}
+                                        value={"entertainment"}
+                                        checked={false}
+                            />
+                            Entertainment
+                        </label>
+                    </div>
+                    <div>
+                        <label style={{ fontSize: "0.5em" }}>
+                            <RadioInput id="productCategory"
+                                        onChange={onChange}
+                                        value={"sporting goods"}
+                                        checked={false}
+                            />
+                            Sporting Goods
+                        </label>
+                    </div>
+                    <div>
+                        <label style={{ fontSize: "0.5em" }}>
+                            <RadioInput id="productCategory"
+                                        onChange={onChange}
+                                        value={"pet supplies"}
+                                        checked={false}
+                            />
+                            Pet Supplies
+                        </label>
+                    </div>
+                    <div>
+                        <label style={{ fontSize: "0.5em" }}>
+                            <RadioInput id="productCategory"
+                                        onChange={onChange}
+                                        value={"home goods"}
+                                        checked={false}
+                            />
+                            Home Goods
+                        </label>
+                    </div>
                   <div>
-                    <label style={{ fontSize: "1em" }}>
-                      <RadioInput
+                    <label style={{ fontSize: "0.5em" }}>
+                      <RadioInput id="productCategory"
                         onChange={onChange}
                         value={"other"}
                         checked={false}
@@ -385,21 +411,21 @@ export const Publish = ({ user }) => {
                     ></input>
                     {priceError !== "" && <ErrorMessage msg={priceError} />}
                   </div>
-                  <div className="col-sm-4 form-group">
-                    <label htmlFor="unitStock">Number of Items</label>
-                    <input
-                      type="text"
-                      placeholder="Number of Items"
-                      className="form-control"
-                      id="unitStock"
-                      onChange={onChange}
-                    ></input>
-                    {unitError !== "" && <ErrorMessage msg={unitError} />}
-                  </div>
+                  {/*<div className="col-sm-4 form-group">*/}
+                  {/*  <label htmlFor="unitStock">Number of Items</label>*/}
+                  {/*  <input*/}
+                  {/*    type="text"*/}
+                  {/*    placeholder="Number of Items"*/}
+                  {/*    className="form-control"*/}
+                  {/*    id="unitStock"*/}
+                  {/*    onChange={onChange}*/}
+                  {/*  ></input>*/}
+                  {/*  {unitError !== "" && <ErrorMessage msg={unitError} />}*/}
+                  {/*</div>*/}
                 </div>
                 <div className="row">
                   <label htmlFor="images">
-                    Upload images:{" "}
+                    Upload images: （Maximum 5 images, Max file size: 10MB)
                     <input
                       style={{ marginTop: "5px", fontSize: "10px" }}
                       type="file"
@@ -409,6 +435,7 @@ export const Publish = ({ user }) => {
                       multiple
                     />
                   </label>
+                    {preview !== undefined && <Preview images={preview}/>}
                   {submitError !== "" && <ErrorMessage msg={submitError} />}
                 </div>
                 <div className="row justify-content-center form-actions">

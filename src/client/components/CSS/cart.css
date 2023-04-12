@@ -1,7 +1,7 @@
-body{
-    margin-top:20px;
-    background:#eee;
-}
+/*body{*/
+/*    margin-top:20px;*/
+/*    background:#eee;*/
+/*}*/
 .product-card {
     position: relative;
     max-width: 380px;
@@ -62,7 +62,7 @@ body{
     margin-right: 6px;
     color: rgba(140, 140, 140, .75);
 }
-.product-card .product-buttons-wrap {
+ .product-card .product-buttons-wrap {
     position: absolute;
     bottom: -20px;
     left: 0;
@@ -262,7 +262,8 @@ body{
 }
 .cart-item .cart-item-product-thumb > img {
     display: block;
-    width: 100%;
+    width: 85px;
+    max-height: 85px;
 }
 .cart-item .cart-item-product-info {
     padding-top: 5px;

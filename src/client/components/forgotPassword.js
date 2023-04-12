@@ -47,7 +47,7 @@ export const ForgotPassword = () => {
 
 
     return (
-        <div className="container padding-bottom-3x mb-2">
+        <div className="container padding-bottom-3x mb-2 forgotPwd">
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10">
                     <h2>Forgot your password?</h2>

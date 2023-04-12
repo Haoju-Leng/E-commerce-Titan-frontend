@@ -30,6 +30,7 @@ export const Home = ({user}) => {
   };
   useEffect(() => {
 
+
     // const geturl = async(lastDigit, imgKey) => {
     //     await fetch("http://localhost:8080/api/v1/products/?page=2&size=20" + lastDigit, {headers: {
     //         "Content-Type": "application/json",
@@ -83,6 +84,7 @@ export const Home = ({user}) => {
     const updatedstate = {}; 
 
     if (products != null) {
+        console.log(products);
       for (let key of Object.keys(products)) {
         geturl(products[key].productFileIdList[0], products[key].name, updatedstate);
 
