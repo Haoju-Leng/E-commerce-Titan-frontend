@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import md5 from "md5";
+import {AUTH_KEY} from "../../shared/constant.js";
+import {CometChat} from "@cometchat-pro/chat";
 
 const ErrorBase = styled.div`
   grid-column: 1 / 3;
@@ -42,6 +44,23 @@ export const Login = (props) => {
     const data = await res.json();
     if (res.ok) {
       props.logIn(data);
+      let authKey = AUTH_KEY;
+      let uid = data.email.replace("@vanderbilt.edu", "").replaceAll(".", "_");
+      CometChat.login(uid, authKey).then(
+          (User) => {
+            console.log("Login Successful:", { User });
+
+            // Comment out in case chat service is not available
+
+            // props.logIn(data);
+            // navigate(`/home`);
+          },
+          (error) => {
+            console.log("Login failed with exception:", { error });
+            // User login failed, check error and take appropriate action.
+            setError(`Error: ${error}`);
+          }
+      );
       navigate(`/home`);
     } else {
       setError(`Error: ${data.error}`);
@@ -58,12 +77,12 @@ export const Login = (props) => {
       style={{ marginTop: "30px", marginBottom: "180px" }}
     >
       <div className="row justify-content-center">
-        <div className="col-md-4">
+        <div className="col-md-5">
           <div className="login-panel panel panel-default">
             <div className="panel-heading">
-              <h3 className="panel-title" align="center">
-                Sign In
-              </h3>
+              <h1 className="panel-title" align="center">
+                Login
+              </h1>
             </div>
             <div className="panel-body">
               <form name="loginForm">
@@ -91,11 +110,11 @@ export const Login = (props) => {
                   <div className="row justify-content-center" id="button">
                     <div className="col-5">
                       <button
-                        className="btn btn-sm btn-success"
-                        style={{ marginLeft: 5 + "em" }}
+                        className="btn btn-primary btn-lg btn-block"
+                        // style={{ marginLeft: 5 + "em" }}
                         onClick={onSubmit}
                       >
-                        Login
+                        Sign In
                       </button>
                       <div style={{ marginTop: "1em" }}>
                         <a href="/register" style={{ fontSize: "0.5em" }}>

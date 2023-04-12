@@ -3,18 +3,108 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import md5 from "md5";
-import "./CSS/cart.css";
+import "./CSS/order.css";
 
+const OrderList = ({ order, index, user }) => {
+    let [seller, setSeller] = useState(null);
+    let [image, setImage] = useState(null);
+    let [product, setProduct] = useState(null);
+
+    useEffect(() => {
+        const geturl = async(lastDigit) => {
+            await fetch("http://localhost:8080/api/v1/products/file/" + lastDigit, {headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user.token}`,
+                }} ).then(response => response.blob())
+                .then(imageBlob => {
+                     setImage(URL.createObjectURL(imageBlob).toString());
+                })
+        };
+
+        async function getSeller(sellerId){
+            let res = await fetch(`http://localhost:8080/api/v1/user/${sellerId}`, { //TODO: update API
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                },
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                setSeller(data);
+            }
+        }
+        getSeller(order.sellerId);
+
+        async function getProduct(productId){
+            let res = await fetch(`http://localhost:8080/api/v1/products/${productId}`, { //TODO: update API
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                },
+            });
+
+            const product = await res.json();
+            if (res.ok) {
+                await geturl(product.productFileIdList[0]);
+                setProduct(product);
+                console.log(product);
+            }
+        }
+        getProduct(order.productId);
+    }, []);
+
+    if(seller === null || product === null) return null;
+
+    return (
+        <div key={index} className="bg-white card  order-list shadow-sm">
+            <div className="gold-members p-4">
+                <div className="media">
+                    <div className="col-md-1">
+                        <img width={60} height={60}
+                             src={image}
+                             alt="Generic placeholder image"/>
+                    </div>
+                    <div className="media-body col-md-11">
+                            <span className="float-end text-info">Status: {order.state === "Processing"
+                                ? `Waiting for seller's response`
+                                :  order.state === "Completed"
+                                    ? `Order accepted by seller`
+                                : `Order rejected by seller`}
+                                <i className="icofont-check-circled text-success"></i></span>
+                        <h2 className="mb-2">
+                            <div href="#" className="text-black">{product.name}</div>
+                        </h2>
+                        <p className="text-gray mb-1"><i
+                            className="icofont-location-arrow"></i>{`Delivery method: ${order.deliveryMethod}`}
+                        </p>
+                        {/*<p className="text-gray mb-3"><i className="icofont-list"></i> ORDER*/}
+                        {/*    #25102589748 <i className="icofont-clock-time ml-2"></i> Mon, Nov*/}
+                        {/*    12, 6:26 PM</p>*/}
+                        <p className="text-dark">{`Description: ${product.description}`}
+                        </p>
+                        <hr/>
+                        <div className="float-end">
+                            <a className="btn btn-sm btn-outline-primary" href={`/chat/${seller.email}`}><i
+                                className="bi bi-headphones"></i> CONTACT SELLER</a>
+                            {/*<a className="btn btn-sm btn-primary" href="#"><i*/}
+                            {/*    className="icofont-refresh"></i> REORDER</a>*/}
+                        </div>
+                        <strong className="mb-0 text-black text-primary pt-2"><span
+                            className="text-black"> Total Price: {`$${order.unitPrice}`}</span>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
 export const Order = ({user}) => {
 
-    let [orderList, updateOrderList] = useState({
-
-    });
-
-    let [error, setError] = useState("");
+    let [orderList, updateOrderList] = useState(null);
 
     useEffect(async () => {
-        let res = await fetch("http://localhost:8080/api/v1/cart/", { //TODO: update API
+        let res = await fetch("http://localhost:8080/api/v1/order/getBuyingOrders", { //TODO: update API
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${user.token}`
@@ -24,131 +114,64 @@ export const Order = ({user}) => {
         const data = await res.json();
         if (res.ok) {
             updateOrderList(data);
-        } else {
-            setError(`Error happened`);
+            console.log(data);
         }
 
     }, []);
 
-
     return (
 
-        <div className="container pb-5 mb-2">
-            {error !== "" && <div>{error}</div>}
-            <br/>
-            <div className="cart-item d-md-flex justify-content-between">
-                <div className="px-3 my-3">
-                    <a className="cart-item-product" href="#">
-                        <div className="cart-item-product-thumb"><img
-                            src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Product"/></div>
-                        <div className="cart-item-product-info">
-                            <h4 className="cart-item-product-title">Canon EOS M50 Mirrorless Camera</h4>
+        <div className="container OrderDiv">
+            <div className="row">
+                <div className="col-md-3 py-3">
+                    <div className="osahan-account-page-left shadow-sm bg-white">
+                        <div className="border-bottom p-4">
+                            <div className="osahan-user text-center">
+                                <div className="osahan-user-media">
+                                    <img className="mb-3 rounded-pill shadow-sm mt-1"
+                                         src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                         alt="gurdeep singh osahan"/>
+                                        <div className="osahan-user-media-body">
+                                            <h3 className="mb-2">{`${user.firstName} ${user.lastName}`}</h3>
+                                            <p className="mb-1">{user.phone}</p>
+                                            <p>{user.email}</p>
+                                            <p>{user.address}</p>
+                                            <p>{`${user.city}, ${user.state}, ${user.zipcode}`}</p>
+                                            <p className="mb-0 text-black fw-bold"><a
+                                                className="text-primary mr-3"  href="/profile"><i
+                                                className="bi bi-pen"></i> EDIT</a></p>
+                                        </div>
+                                </div>
+                            </div>
                         </div>
-                    </a>
-                </div>
-                <div className="px-3 my-3 text-center">
-                    <div className="cart-item-label">Quantity</div>
-                    <div className="count-input">
-                        <span className="text-xl font-weight-medium">1</span>
+                        {/*<ul className="nav nav-tabs flex-column border-0 pt-4 pl-4 pb-4" id="myTab" role="tablist">*/}
+                        {/*    <li className="nav-item">*/}
+                        {/*        <a className="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab"*/}
+                        {/*           aria-controls="orders" aria-selected="false"><i*/}
+                        {/*            className="icofont-food-cart"></i> Orders</a>*/}
+                        {/*    </li>*/}
+                        {/*</ul>*/}
                     </div>
                 </div>
-                <div className="px-3 my-3 text-center">
-                    <div className="cart-item-label">Subtotal</div>
-                    <span className="text-xl font-weight-medium">$910.00</span>
-                </div>
-                <div className="px-3 my-3 text-center">
-                    <div className="cart-item-label">Discount</div>
-                    <span className="text-xl font-weight-medium">$35.00</span>
-                    <br/>
-                    <div className="mt-2 align-self-end"><a className="btn btn-style-1 btn-primary btn-block"
-                                                                     href="/checkout"><i
-                        className="fe-icon-credit-card"></i>&nbsp;Chat with Seller</a></div>
-                </div>
+                <div className="col-md-9">
+                    <div className="osahan-account-page-right shadow-sm bg-white p-4">
+                        <div id="myTabContent">
+                            <div id="orders"
+                                 aria-labelledby="orders-tab">
+                                <h4 className="fw-bold mt-0 mb-4">Past Orders</h4>
+                                {orderList !== null
+                                    ? orderList.map((order, index) => <OrderList order={order} index={index} user={user}/> )
+                                    : <div><h1>You don't have any past orders.</h1></div>}
 
 
-
-            </div>
-
-            <div className="cart-item d-md-flex justify-content-between"><span className="remove-item"><i
-                className="fa fa-times"></i></span>
-                <div className="px-3 my-3">
-                    <a className="cart-item-product" href="#">
-                        <div className="cart-item-product-thumb"><img
-                            src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Product" /></div>
-                        <div className="cart-item-product-info">
-                            <h4 className="cart-item-product-title">Apple iPhone X 256 GB Space Gray</h4>
-                            <span><strong>Memory:</strong> 256GB</span><span><strong>Color:</strong> Space Gray</span>
+                            </div>
                         </div>
-                    </a>
-                </div>
-                <div className="px-3 my-3 text-center">
-                    <div className="cart-item-label">Quantity</div>
-                    <div className="count-input">
-                        <select className="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                        </select>
                     </div>
                 </div>
-                <div className="px-3 my-3 text-center">
-                    <div className="cart-item-label">Subtotal</div>
-                    <span className="text-xl font-weight-medium">$1,450.00</span>
-                </div>
-                <div className="px-3 my-3 text-center">
-                    <div className="cart-item-label">Discount</div>
-                    <span className="text-xl font-weight-medium">—</span>
-                </div>
+
             </div>
-
-            <div className="cart-item d-md-flex justify-content-between"><span className="remove-item"><i
-                className="fa fa-times"></i></span>
-                <div className="px-3 my-3">
-                    <a className="cart-item-product" href="#">
-                        <div className="cart-item-product-thumb"><img
-                            src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Product" /></div>
-                        <div className="cart-item-product-info">
-                            <h4 className="cart-item-product-title">HP LaserJet Pro Laser Printer</h4>
-                            <span><strong>Type:</strong> Laser</span><span><strong>Color:</strong> White</span>
-                        </div>
-                    </a>
-                </div>
-                <div className="px-3 my-3 text-center">
-                    <div className="cart-item-label">Quantity</div>
-                    <div className="count-input">
-                        <select className="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                        </select>
-                    </div>
-                </div>
-                <div className="px-3 my-3 text-center">
-                    <div className="cart-item-label">Subtotal</div>
-                    <span className="text-xl font-weight-medium">$188.50</span>
-                </div>
-                <div className="px-3 my-3 text-center">
-                    <div className="cart-item-label">Discount</div>
-                    <span className="text-xl font-weight-medium">—</span>
-                </div>
-            </div>
-
-
-            {/*<hr className="my-2" />*/}
-            {/*<div className="row pt-3 pb-5 mb-2">*/}
-            {/*    <div className="col-sm-6 mb-3"><a className="btn btn-style-1 btn-secondary btn-block" href="#"><i*/}
-            {/*        className="fe-icon-refresh-ccw"></i>&nbsp;Update Cart</a></div>*/}
-            {/*    <div className="col-sm-6 mb-3"><a className="btn btn-style-1 btn-primary btn-block"*/}
-            {/*                                      href="/checkout"><i*/}
-            {/*        className="fe-icon-credit-card"></i>&nbsp;Checkout</a></div>*/}
-            {/*</div>*/}
         </div>
+
     );
 
 

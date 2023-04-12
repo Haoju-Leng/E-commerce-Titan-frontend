@@ -73,19 +73,24 @@ export const EditProfile = ({ user }) => {
         email: ""
     });
 
-    // useEffect(async () => {
-    //     let res = await fetch("http://localhost:8080/api/v1/profile", { //TODO: update API
-    //         method: "GET",
-    //         headers: {
-    //             "Authorization": `Bearer ${user.token}`
-    //         },
-    //     });
-    //
-    //     const data = await res.json();
-    //     if (res.ok) {
-    //         setState(data);
-    //     }
-    // });
+    useEffect( () => {
+        async function fetchProfile() {
+            let res = await fetch("http://localhost:8080/api/v1/user/profile", { //TODO: update API
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                },
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                setState(data);
+                console.log(data);
+            }
+        }
+        fetchProfile();
+
+    }, [success]);
 
     const onChange = (ev) => {
         setState({
@@ -97,14 +102,15 @@ export const EditProfile = ({ user }) => {
 
     const onSubmit = async (ev) => {
         ev.preventDefault();
-        let res = await fetch("http://localhost:8081/api/v1/profile/", {
+        let res = await fetch("http://localhost:8080/api/v1/user/profile", {
             body: JSON.stringify(state),
-            method: "POST",
+            method: "PUT",
             headers: {
                 "content-type": "application/json",
                 "Authorization": `Bearer ${user.token}`
             },
         });
+        console.log(state);
         if (res.ok) {
             setSuccess(true);
         } else {
@@ -118,7 +124,7 @@ export const EditProfile = ({ user }) => {
             {success && (
                 <OkButton published={success} navigate={navigate}/>
             )}
-        <div className="container-xl px-4 mt-4">
+        <div className="container-xl px-4 mt-4 profileDiv">
             <nav className="nav nav-borders">
                 <a className="nav-link active ms-0"
                    href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details"
@@ -180,27 +186,27 @@ export const EditProfile = ({ user }) => {
                                     <div className="col-md-6">
                                         <label className="small mb-1" htmlFor="inputPhone">Phone number</label>
                                         <input className="form-control" id="phone" type="tel"
-                                               placeholder="Enter your phone number" defaultValue={state.phone} onChange={onChange}/>
+                                               placeholder={state.phone} defaultValue={state.phone} onChange={onChange}/>
                                     </div>
                                     </div>
                                     <hr/>
                                     <div className="mb-3">
                                         <label className="small mb-1" htmlFor="inputOrgName">Shipping address</label>
                                         <input className="form-control" id="address" type="text"
-                                               placeholder="Default Address" defaultValue={state.address} onChange={onChange}/>
+                                               placeholder={state.address} defaultValue={state.address} onChange={onChange}/>
                                     </div>
                                     <div className="row gx-3 mb-3">
 
                                         <div className="col-md-6">
                                             <label className="small mb-1" htmlFor="inputOrgName">City</label>
                                             <input className="form-control" id="city" type="text"
-                                                   placeholder="Default City" defaultValue={state.city} onChange={onChange}/>
+                                                   placeholder={state.city} defaultValue={state.city} onChange={onChange}/>
                                         </div>
 
                                         <div className="col-md-6">
                                             <label className="small mb-1" htmlFor="inputLocation">State</label>
                                             <input className="form-control" id="state" type="text"
-                                                   placeholder="Default state" defaultValue={state.state} onChange={onChange}/>
+                                                   placeholder={state.state} defaultValue={state.state} onChange={onChange}/>
                                         </div>
                                     </div>
                                     <div className="row gx-3 mb-3">
@@ -208,13 +214,13 @@ export const EditProfile = ({ user }) => {
                                         <div className="col-md-6">
                                             <label className="small mb-1" htmlFor="inputOrgName">Country</label>
                                             <input className="form-control" id="country" type="text"
-                                                   placeholder="Default Country" defaultValue={state.country} onChange={onChange}/>
+                                                   placeholder={state.country} defaultValue={state.country} onChange={onChange}/>
                                         </div>
 
                                         <div className="col-md-6">
                                             <label className="small mb-1" htmlFor="inputLocation">ZipCode</label>
                                             <input className="form-control" id="zipcode" type="text"
-                                                   placeholder="Default ZipCode" defaultValue={state.zipcode} onChange={onChange}/>
+                                                   placeholder={state.zipcode} defaultValue={state.zipcode} onChange={onChange}/>
                                         </div>
                                     </div>
 

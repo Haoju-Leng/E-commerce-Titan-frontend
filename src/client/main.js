@@ -2,34 +2,56 @@
 "use strict";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import React, { useState } from "react";
-import { createRoot } from "react-dom/client";
-import styled from "styled-components";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Home } from "./components/home.js";
+import React, {useState} from "react";
+import {createRoot} from "react-dom/client";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {Home} from "./components/home.js";
 
-import { Header } from "./components/header.js";
+import {Header} from "./components/header.js";
 // import { Landing } from "./components/landing.js";
-import { Login } from "./components/login.js";
-import { Logout } from "./components/logout.js";
-import { Register } from "./components/register.js";
+import {Login} from "./components/login.js";
+import {Logout} from "./components/logout.js";
+import {Register} from "./components/register.js";
 //import { ItemDetail } from "./components/ItemDetail.js";
-
 // import { Start } from "./components/start.js";
-import { Cart } from "./components/cart.js";
-import { Publish } from "./components/publish.js";
-import { EditProfile } from "./components/editProfile.js";
+import {Cart} from "./components/cart.js";
+import {Publish} from "./components/publish.js";
+import {EditProfile} from "./components/editProfile.js";
 import {Order} from "./components/order.js";
 import {PostedItems} from "./components/postedItems";
 import {ForgotPassword} from "./components/forgotPassword";
 import {SetNewPassword} from "./components/setNewPassword";
+import {ItemDetail} from "./components/ItemDetail.js";
 // import { MoveDetail } from "./components/moveDetail.js";
+import {CometChat} from '@cometchat-pro/chat'
+import {APP_ID, REGION} from "../shared/constant.js";
+import {Chat} from "./components/chat.js";
+import {OrderPlaced} from "./components/orderPlaced";
+
+const appID = APP_ID;
+const appSetting = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(REGION).build();
+CometChat.init(appID, appSetting).then(
+    () => {
+        console.log("Initialization completed successfully");
+    },
+    error => {
+        console.log("Initialization failed with error:", error);
+    }
+);
+
+
 
 const defaultUser = {
   token: "",
   email: "",
   firstName: "",
   lastName: "",
+    address: "",
+    city: "",
+    country: "",
+    state: "",
+    zipcode: "",
+    phone: ""
 };
 
 /***
@@ -118,7 +140,7 @@ const MyApp = () => {
             {/*<GridBase>*/}
                 <Header user={state.firstName}/>
                 <Routes>
-                    {/*<Route exact path="/" element={<Landing />} />*/}
+                    <Route exact path="/" element={<Home user={state} />} />
                     <Route path="/home" element={<Home user={state} />} />
                     <Route path="/login" element={<Login logIn={logIn} />} />
                     <Route path="/logout" element={<Logout logOut={logOut} />} />
@@ -129,7 +151,7 @@ const MyApp = () => {
                         }
                     />
                     <Route path="/post" element={<CheckPublish loggedIn={loggedIn()} state={state} />} />
-                    {/*<Route path="/item/:id" element={<ItemDetail user={state} />} />*/}
+                    <Route path="/item/:id" element={<ItemDetail user={state} />} />
                     <Route path="/cart" element={<CheckCart loggedIn={loggedIn()} state={state} />} />
                     {/*<Route path="/edit/:username" element={<EditProfile currentUser={state.username} />} />*/}
                     <Route
@@ -148,8 +170,9 @@ const MyApp = () => {
                     <Route path="/postedItems" element={<ReqUser user={state} children={<PostedItems user={state}/>}/>}/>
                     <Route path="/forgotPassword" element={<ForgotPassword />}/>}/>
                     <Route path="/setNewPassword/:email" element={<SetNewPassword />}/>}/>
-
-
+                    <Route path="/chat" element={<ReqUser user={state} children={<Chat />} />}/>
+                    <Route path="/chat/:email" element={<ReqUser user={state} children={<Chat />} />}/>
+                    <Route path="/orderPlaced" element={<ReqUser user={state} children={<OrderPlaced />} />}/>
 
 
                 </Routes>
