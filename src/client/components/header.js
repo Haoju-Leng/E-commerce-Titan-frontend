@@ -98,7 +98,7 @@ export const Header = ({ user = "" }) => {
         <header className="header-area overlay headerDiv" style={{marginLeft: -15, marginRight: -15}}>
             <nav className="navbar navbar-expand navbar-dark" >
                 <div className="container">
-                    <a style={{marginTop: '1em'}} href="/" className="navbar-brand">Brand</a>
+                    <a style={{marginTop: '1em'}} href="/home" className="navbar-brand">Brand</a>
 
                     <button type="button" className="navbar-toggler collapsed" data-toggle="collapse"
                             data-target="#main-nav">
@@ -110,7 +110,7 @@ export const Header = ({ user = "" }) => {
                     <div id="main-nav" className="collapse navbar-collapse">
                         {user !== "" &&
                             <ul className="navbar-nav ml-auto">
-                                <li><a href="/" className="nav-item nav-link active">Home</a></li>
+                                <li><a href="/home" className="nav-item nav-link active">Home</a></li>
                                 <li><a href="/cart" className="nav-item nav-link">Cart</a></li>
                                 <li className="dropdown">
                                     <a href="#" className="nav-item nav-link" data-toggle="dropdown">My account</a>

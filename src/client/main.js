@@ -9,10 +9,12 @@ import {Home} from "./components/home.js";
 
 import {Header} from "./components/header.js";
 // import { Landing } from "./components/landing.js";
-import {Login} from "./components/login.js";
-import {Logout} from "./components/logout.js";
-import {Register} from "./components/register.js";
-//import { ItemDetail } from "./components/ItemDetail.js";
+
+import { Login } from "./components/login.js";
+import { Logout } from "./components/logout.js";
+import { Register } from "./components/register.js";
+import { ItemDetail } from "./components/ItemDetail.js";
+
 // import { Start } from "./components/start.js";
 import {Cart} from "./components/cart.js";
 import {Publish} from "./components/publish.js";
