@@ -13,7 +13,7 @@ import { Header } from "./components/header.js";
 import { Login } from "./components/login.js";
 import { Logout } from "./components/logout.js";
 import { Register } from "./components/register.js";
-//import { ItemDetail } from "./components/ItemDetail.js";
+import { ItemDetail } from "./components/ItemDetail.js";
 
 // import { Start } from "./components/start.js";
 import { Cart } from "./components/cart.js";
@@ -129,7 +129,7 @@ const MyApp = () => {
                         }
                     />
                     <Route path="/post" element={<CheckPublish loggedIn={loggedIn()} state={state} />} />
-                    {/*<Route path="/item/:id" element={<ItemDetail user={state} />} />*/}
+                    <Route path="/item/:id" element={<ItemDetail user={state} />} />
                     <Route path="/cart" element={<CheckCart loggedIn={loggedIn()} state={state} />} />
                     {/*<Route path="/edit/:username" element={<EditProfile currentUser={state.username} />} />*/}
                     <Route

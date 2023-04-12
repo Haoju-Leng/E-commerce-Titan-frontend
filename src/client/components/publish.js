@@ -232,7 +232,7 @@ export const Publish = ({ user }) => {
             // {
             //     console.log(key[0] + ', ' + key[1])
             // }
-            let res = await fetch("http://localhost:8080/api/v1/product/", { //TODO: update API
+            let res = await fetch("http://localhost:8080/api/v1/products/", { //TODO: update API
                 body: formData,
                 method: "POST",
                 headers: {
