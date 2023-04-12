@@ -71,6 +71,7 @@ export const ItemDetail = ({ user }) => {
           }}
       );
       const data = await response.json();
+      console.log(data)
       // console.log(data.productFileIdList);
       const updatedstate = []; 
 
@@ -173,14 +174,7 @@ export const ItemDetail = ({ user }) => {
             <div className="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
                 <h2 className="name">
                 {item.name}
-                    <small>Product by <a href="javascript:void(0);">Adeline</a></small>
-                    <i className="fa fa-star fa-2x text-primary"></i>
-                    <i className="fa fa-star fa-2x text-primary"></i>
-                    <i className="fa fa-star fa-2x text-primary"></i>
-                    <i className="fa fa-star fa-2x text-primary"></i>
-                    <i className="fa fa-star fa-2x text-muted"></i>
-                    <span className="fa fa-2x"><h5>(109) Votes</h5></span>
-                    <a href="javascript:void(0);">109 customer reviews</a>
+                    <small>Number of Available: {item.stock}<a href="javascript:void(0);"></a></small>
                 </h2>
                 <hr />
                 <h3 className="price-container">
@@ -190,10 +184,10 @@ export const ItemDetail = ({ user }) => {
                 <div className="certified">
                     <ul>
                         <li>
-                            <a href="javascript:void(0);">Delivery time<span>7 Working Days</span></a>
+                            <a href="javascript:void(0);">Manufacturer<span>{item.manufacturer}</span></a>
                         </li>
                         <li>
-                            <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
+                            <a href="javascript:void(0);">Category<span>{item.productCategory}</span></a>
                         </li>
                     </ul>
                 </div>
@@ -201,8 +195,7 @@ export const ItemDetail = ({ user }) => {
                 <div className="description description-tabs">
                     <ul id="myTab" className="nav nav-pills">
                         <li className="active"><a href="#more-information" data-toggle="tab" className="no-margin">Product Description </a></li>
-                        <li className=""><a href="#specifications" data-toggle="tab">Specifications</a></li>
-                        <li className=""><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                   
                     </ul>
                     <div id="myTabContent" className="tab-content">
 
