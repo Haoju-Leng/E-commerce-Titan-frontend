@@ -63,6 +63,10 @@ const OrderList = ({ order, index, user }) => {
                     <div className="col-md-1">
                         <img width={60} height={60}
                              src={image}
+                             onError={({ currentTarget }) => {
+                                 currentTarget.onerror = null; // prevents looping
+                                 currentTarget.src="/images/default_product.jpg";
+                             }}
                              alt="Generic placeholder image"/>
                     </div>
                     <div className="media-body col-md-11">

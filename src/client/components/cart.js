@@ -39,7 +39,11 @@ const CartItem = ( { cartList, images, onRemove, user, setProductsInfo, products
                     <div className="px-3 my-3 col-8">
                         <a className="cart-item-product" href={`/item/${products.product.id}`}>
                             <div className="cart-item-product-thumb"><img
-                                className="media-object img-thumbnail" src={images[products.product.id]} alt="Product"/></div>
+                                className="media-object img-thumbnail" src={images[products.product.id]}
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null; // prevents looping
+                                    currentTarget.src="/images/default_product.jpg";
+                                }} alt="Product"/></div>
                             <div className="cart-item-product-info">
                                 <h4 className="cart-item-product-title">{products.product.name}</h4>
                             </div>
