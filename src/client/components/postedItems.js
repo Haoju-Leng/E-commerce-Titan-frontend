@@ -116,6 +116,10 @@ const Product = ({ product, index, images, user}) => {
     return (
         <div key={index} className="row">
             <div className="col-md-1"><img src={images[product.id]}
+                                           onError={({ currentTarget }) => {
+                                               currentTarget.onerror = null; // prevents looping
+                                               currentTarget.src="/images/default_product.jpg";
+                                           }}
                                            className="media-object img-thumbnail" alt="product image"/></div>
             <div className="col-md-11">
                 <div className="row">
