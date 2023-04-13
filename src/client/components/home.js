@@ -35,6 +35,7 @@ export const Home = ({user}) => {
   let [category, setCategory] = useState('Select Category');
   let [searchName, setSearchName] = useState(''); 
   let [error, setError] = useState('');
+  let [empty, setEmpty] = useState(false); 
   const navigate = useNavigate();
   const getProduct = async () => {
     const response = await fetch(`http://localhost:8080/api/v1/products/?page=${currentpage}&size=${pageNum}` , {headers: {
@@ -147,8 +148,9 @@ export const Home = ({user}) => {
                     <span className="product-price">
                         ${products[i].price}
                     </span>
-                    <small className="text-muted">{products[i].name}</small>
-                    <a  className="product-name" onClick={(id = "") => redirect(event, (id = products[i].id))}> {products[i].productCategory}</a>
+                    <a  className="product-name" onClick={(id = "") => redirect(event, (id = products[i].id))}> {products[i].name}</a>
+
+                    <small className="text-muted">{products[i].productCategory}</small>
 
                     <div className="small m-t-xs">
                     {products[i].description}
@@ -167,25 +169,31 @@ export const Home = ({user}) => {
     );
   });
   const submitForm = (e) => {
+    console.log("check submit")
     console.log(category)
     console.log(searchName)
     e.preventDefault()
-
-    if (category === "Select Category") {setError('Category cannot be empty'); return}
-    if (searchName === "") {setError('Product Name cannot be empty'); return}
+    let catparam = e.target.value
+    if (catparam === "Select Category") {catparam = ''}
+    if (catparam === "All") {catparam = ''}
+    // if (searchName === "") {setError('Product Name cannot be empty'); return}
     const getProductsearch = async () => {
-      const response = await fetch(`http://localhost:8080/api/v1/products/search?page=${currentpage}&size=${pageNum}&name=${searchName}&productCategory${category}` , {headers: {
+      const response = await fetch(`http://localhost:8080/api/v1/products/search?page=0&size=${pageNum}&name=${searchName}&productCategory=${catparam}` , {headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${user.token}`,
       }});
       const data = await response.json();
-      console.log(data);
-  
+      console.log('below is data')
+      console.log(Object.keys(data).length)
+      console.log(data.size)
+      if (data.size === 0) {setError('No products found'); setEmpty(true)} 
+      else {setEmpty(false); setError('')}
+
       setProducts(data.data);  
-      console.log("checking")
-      console.log(data)   
+
+
       setIndex(data.page)
-      console.log('length of the product' + Object.keys(data).length)
+
     };
 
 
@@ -229,7 +237,7 @@ export const Home = ({user}) => {
 
   return (
     <div className="container">
-      <h1 style={{textAlign: "center", fontFamily: 'Roboto, sans-serif', marginTop: '1em'}}>Welcome to E-Commerence Titan</h1>
+      <h1 style={{textAlign: "center", fontFamily: 'Lobster', marginTop: '1em'}}>Welcome to E-Commerence Titan</h1>
       <p style={{textAlign: "center", fontFamily: 'Roboto, sans-serif'}}>Below you can find all the products that are currently listed on our website.</p>
       <div className="row">
     <div className="col-9">
@@ -255,8 +263,9 @@ export const Home = ({user}) => {
 
 
             <p className="card-title">Category: </p>
-            <select className="card-title form-select" name="pageNum" id="pageNum" onChange={(ev) => setCategory(ev.target.value)}>
+            <select className="card-title form-select" name="pageNum" id="pageNum" onChange={(ev) => {setCategory(ev.target.value); submitForm(ev)}}>
       <option value={category}>{category}</option>
+      <option value="All">Show All</option>
     <option value="books">Books</option>
     <option value="electronics" >Electronics</option>
     <option value="apparel">Apparel</option>
@@ -267,15 +276,18 @@ export const Home = ({user}) => {
     <option value="home goods">Home Goods</option>
     <option value="other">Other</option>
   </select>
-
+  
 
 
   <p className="card-title">Product Name:</p>
 
 <input className="card-title form-control" style={{width: '100%'}} onChange={(ev) => setSearchName(ev.target.value)} placeholder="Product Name"></input>
+    <div style={{textAlign: 'center'}}>
+    {error !== "" && <ErrorMessage msg={error} />}
 
-  <input style={{marginTop: '1em'}} className="btn btn-primary card-title" type="submit" value='Search' onClick={(ev)=> submitForm(ev)}  />
-  {error !== "" && <ErrorMessage msg={error} />}
+    <input style={{margin: '0 auto'}} className="btn btn-primary card-title" type="submit" value='Search' onClick={(ev)=> submitForm(ev)}  />
+
+    </div>
 
 
  
@@ -292,19 +304,18 @@ export const Home = ({user}) => {
       <div className="col-9">
         <div className="container">
         <div className="row" >{productList}</div>
-        <div className="row">
-          <div className="col-9"></div>
-          <div className="col-3">
-
-          <nav aria-label="Page navigation example" style={{float: 'right'}} >
-     <ul class="pagination">
+        <div className="row" >
+     
+        {empty && <div style={{marginTop: '45rem'}}></div>}
+          <nav aria-label="Page navigation example"  style={{textAlign: 'center'}} >
+     <ul class="pagination "style={{display: 'inline-block' ,textAlign: 'left'}}>
       {indexes}
       </ul>
       </nav>
 
 
 
-          </div>
+
         
         </div>
         </div>
