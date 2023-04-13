@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment,useState, useEffect } from "react";
 // import * as React from "react";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
@@ -6,25 +6,40 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import NavigationIcon from "@mui/icons-material/Navigation";
-
+import styled from "styled-components";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import "./CSS/items.css";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
+import Popup from "reactjs-popup";
 
 
 // import React from 'react';
 // import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 
+const PopupButton = styled.button`
+  width: 140px;
+  height: 20px;
+  text-align: center;
+  line-height: 0.8em;
+  font-size: 0.4em;
+  margin-top: 10px;
+  margin-left: 90px;
+  margin-bottom: 10px;
+`;
 const spanStyle = {
   padding: '20px',
   background: '#efefef',
   color: '#000000'
 }
-
+const PopupHeader = styled.div`
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+`;
 const divStyle = {
   display: 'flex',
   alignItems: 'center',
@@ -40,7 +55,8 @@ export const ItemDetail = ({ user }) => {
   let [item, setItem] = useState({});
     let [images, setImages] = useState([]); 
     let [slideImages, setSlideImages] = useState([]); 
-
+    let [added, setAdded] = useState(false);
+    let navigate = useNavigate();
   useEffect(() => {
 
 
@@ -84,6 +100,7 @@ export const ItemDetail = ({ user }) => {
         name: data.name,
         price: data.price,
         stock: data.stock,
+        sellerid: data.sellerId
       });
     };
     
@@ -98,16 +115,70 @@ export const ItemDetail = ({ user }) => {
             "Content-Type": 'application/json',
           "Authorization": `Bearer ${user.token}`,
         },
-          body: JSON.stringify({dumpy: 'tmp'})
+          
       }).then((res) => {
         if(res.ok){
             console.log('Do something'); //TODO: handle add cart response
+            setAdded(true)
         }else{
             console.log('Pops error');
         }
       });
     };
     addToCart();
+  };
+
+  const onClick = async (sellerId) => {
+    let res = await fetch(`http://localhost:8080/api/v1/user/${sellerId}`, { //TODO: update API
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${user.token}`
+        },
+    });
+console.log(item)
+    const data = await res.json();
+    if (res.ok) {
+        let chatEmail = data.email;
+        navigate(`/chat/${chatEmail}`);
+    }
+}
+
+  const OkButton = (props) => {
+    //TODO: update product path
+    return (
+      <Fragment>
+        <Popup open={props.published} position="top center" modal>
+          <div
+            style={{
+              borderStyle: "solid",
+              borderColor: "darkgray",
+              backgroundColor: "white",
+              width: "500px",
+            }}
+          >
+            <PopupHeader className="header">{`Successfully Added!`}</PopupHeader>
+            <div className="actions">
+              <PopupButton
+                className="btn btn-lg btn-info"
+                onClick={() => {
+                  props.navigate(`/cart`);
+                }}
+              >
+                view cart
+              </PopupButton>
+              <PopupButton
+                className="btn btn-lg btn-info"
+                onClick={() => {
+                    setAdded(false)
+                }}
+              >
+                Keep browsing
+              </PopupButton>
+            </div>
+          </div>
+        </Popup>
+      </Fragment>
+    );
   };
   // if (images !== null) {
   //   console.log("below is images")
@@ -155,6 +226,10 @@ export const ItemDetail = ({ user }) => {
   return (<div className="container">
     {/* <!-- product --> */}
     <div className="product-content product-wrap clearfix product-deatil">
+    {added && (
+        <OkButton published={added} navigate={navigate} itemID={id} />
+      )}
+
         <div className="row">
             <div className="col-md-5 col-sm-12 col-xs-12">
                 <div className="product-image">
@@ -303,8 +378,8 @@ export const ItemDetail = ({ user }) => {
                     </div>
                     <div className="col-sm-12 col-md-6 col-lg-6">
                         <div className="btn-group pull-right">
-                            <button className="btn btn-white btn-default"><i className="fa fa-star"></i> Add to wishlist</button>
-                            <button className="btn btn-white btn-default"><i className="fa fa-envelope"></i> Contact Seller</button>
+
+                            <button className="btn btn-white btn-default" onClick={() => onClick(item.sellerid)}><i className="fa fa-envelope" ></i> Contact Seller</button>
                         </div>
                     </div>
                 </div>
@@ -326,138 +401,3 @@ export const ItemDetail = ({ user }) => {
     
   );
 };
-
-//
-
-// let slideIndex = 1;
-// showSlides(slideIndex);
-
-// // Next/previous controls
-// function plusSlides(n) {
-//   showSlides(slideIndex += n);
-// }
-
-// // Thumbnail image controls
-// function currentSlide(n) {
-//   showSlides(slideIndex = n);
-// }
-
-// function showSlides(n) {
-//   let i;
-//   let slides = document.getElementsByclassNameName("mySlides");
-//   let dots = document.getElementsByclassNameName("demo");
-//   let captionText = document.getElementById("caption");
-//   if (n > slides.length) {slideIndex = 1}
-//   if (n < 1) {slideIndex = slides.length}
-//   for (i = 0; i < slides.length; i++) {
-//     slides[i].style.display = "none";
-//   }
-//   for (i = 0; i < dots.length; i++) {
-//     dots[i].classNameName = dots[i].classNameName.replace(" active", "");
-//   }
-//   slides[slideIndex-1].style.display = "block";
-//   dots[slideIndex-1].classNameName += " active";
-//   captionText.innerHTML = dots[slideIndex-1].alt;
-// }
-
-//     return <div classNameName="container ">
-//         <div classNameName="row">
-//             <div classNameName="col-sm">
-//             <img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600"></img>
-
-//             </div>
-//             <div classNameName="col-sm">divbb</div>
-
-//         </div>
-//         hello world
-
-// {/* // <!-- Container for the image gallery --> */}
-// <div classNameName="container">
-
-//   {/* <!-- Full-width images with number text --> */}
-//   <div classNameName="mySlides">
-//     <div classNameName="numbertext">1 / 3</div>
-//       <img src="img_woods_wide.jpg" width="100%"/>
-//   </div>
-
-//   <div classNameName="mySlides">
-//     <div classNameName="numbertext">2 / 3</div>
-//       <img src="img_5terre_wide.jpg" width="100%"/>
-//   </div>
-
-//   <div classNameName="mySlides">
-//     <div classNameName="numbertext">3 / 3</div>
-//       <img src="img_mountains_wide.jpg" width="100%"/>
-//   </div>
-
-//   {/* <!-- Next and previous buttons --> */}
-//   <a classNameName="prev" onClick={() => setSlideNum(prevState => prevState - 1)}>&#10094;</a>
-//   <a classNameName="next" onClick={() => setSlideNum(prevState => prevState + 1)}>&#10095;</a>
-
-// {/* //   {(pil = "") => onClick(event, pil = "stack1")}  */}
-//   {/* <!-- Image text --> */}
-//   <div classNameName="caption-container">
-//     <p id="caption"></p>
-//   </div>
-
-//   {/* <!-- Thumbnail images --> */}
-//   <div classNameName="row">
-//     <div classNameName="column">
-//       <img classNameName="demo cursor" src="img_woods.jpg" width="100%" onClick="currentSlide(1)" alt="The Woods"/>
-//     </div>
-//     <div classNameName="column">
-//       <img classNameName="demo cursor" src="img_5terre.jpg" width="100%" onClick="currentSlide(2)" alt="Cinque Terre"/>
-//     </div>
-//     <div classNameName="column">
-//       <img classNameName="demo cursor" src="img_mountains.jpg" width="100%" onClick="currentSlide(3)" alt="Mountains and fjords"/>
-//     </div>
-
-//   </div>
-//   {slideNum}
-// </div>
-// </div>
-
-
-////
-
-{/* <div classNameName="container">
-<div classNameName="row">
-  <div classNameName="col-4">
-
-  <div classNameName="slide-container">
-  <Slide>
-  {slideImages.map((slideImage, index)=> { if (slideImage && Object.keys(slideImage).length !== 0) {
-    console.log("this is the slideimga")
-    console.log(slideImage ==={})
-    console.log(Object.keys(slideImage).length === 0)
-    return <div key={index}>
-    <div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }}>
-      <span style={spanStyle}>{slideImage.caption}</span>
-    </div>
-  </div>
-  }
-      
-    })} 
-
-  </Slide>
-</div> </div>
-        <div classNameName="col-1"></div>
-        <div classNameName="col-7">
-          <h1>{item.name}</h1>
-          <h2>about this item:</h2>
-          <p>{item.description}</p>
-          <p>{item.manufacturer}</p>
-
-          <h2>price of this item</h2>
-          <p>{item.price}</p>
-          <h2>stock</h2>
-          <p>{item.stock}</p>
-          <button classNameName="btn btn-primary" onClick={handleButtonAddCart}>
-            Add to Cart
-          </button>
-
-          
-        </div>
-
- */}
-

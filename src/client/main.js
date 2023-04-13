@@ -23,8 +23,8 @@ import {Order} from "./components/order.js";
 import {PostedItems} from "./components/postedItems";
 import {ForgotPassword} from "./components/forgotPassword";
 import {SetNewPassword} from "./components/setNewPassword";
-import {ItemDetail} from "./components/ItemDetail.js";
-// import { MoveDetail } from "./components/moveDetail.js";
+// import {ItemDetail} from "./components/ItemDetail.js";
+// import { MoveDetail } from "./components/moveDetail.js"; 
 import {CometChat} from '@cometchat-pro/chat'
 import {APP_ID, REGION} from "../shared/constant.js";
 import {Chat} from "./components/chat.js";
@@ -126,7 +126,7 @@ const MyApp = () => {
     // const response = await fetch(`/v1/user/${username}`); //TODO: make consistent with API doc
     // const user = await response.json();
     localStorage.setItem("user", JSON.stringify(data));
-    setState(data);
+    setState(data); 
   };
 
   // Helper for when a user logs out
