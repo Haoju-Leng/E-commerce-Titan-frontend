@@ -4,6 +4,27 @@ import { Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import "./CSS/home.css";
 import { Margin } from "@mui/icons-material";
+import styled from "styled-components";
+
+const ErrorBase = styled.div`
+  grid-column: 1 / 3;
+  color: red;
+  display: flex;
+  justify-content: center;
+
+  min-height: 1.2em;
+`;
+
+const ErrorMessage = ({ msg = "", hide = false }) => {
+  return (
+    // <ErrorBase style={{ display: hide ? "none" : "inherit" }}>{msg}</ErrorBase>
+    <div class="alert alert-danger" role="alert " style={{ display: hide ? "none" : "inherit" }}>
+ {msg}
+</div>
+
+  );
+};
+
 
 export const Home = ({user}) => {
   let [products, setProducts] = useState({});
@@ -13,6 +34,7 @@ export const Home = ({user}) => {
   let [currentpage, setCurrentpage] = useState(0); 
   let [category, setCategory] = useState('Select Category');
   let [searchName, setSearchName] = useState(''); 
+  let [error, setError] = useState('');
   const navigate = useNavigate();
   const getProduct = async () => {
     const response = await fetch(`http://localhost:8080/api/v1/products/?page=${currentpage}&size=${pageNum}` , {headers: {
@@ -108,14 +130,17 @@ export const Home = ({user}) => {
     return (
 
 
-<div className="col-md-3">
-        <div className="ibox">
+<div className="col-4 d-flex " >
+        <div className="ibox d-flex">
             <div className="ibox-content product-box">
                 <div className="product-imitation">
                 <img
           src={imglist[products[i].name]}
-          width="200" 
-          height="150"
+          width="220" 
+          height="150" onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src="/images/default_product.jpg";
+        }}
         />
                 </div>
                 <div className="product-desc">
@@ -123,7 +148,7 @@ export const Home = ({user}) => {
                         ${products[i].price}
                     </span>
                     <small className="text-muted">{products[i].name}</small>
-                    <a href="#" className="product-name"> {products[i].productCategory}</a>
+                    <a  className="product-name" onClick={(id = "") => redirect(event, (id = products[i].id))}> {products[i].productCategory}</a>
 
                     <div className="small m-t-xs">
                     {products[i].description}
@@ -146,7 +171,8 @@ export const Home = ({user}) => {
     console.log(searchName)
     e.preventDefault()
 
-
+    if (category === "Select Category") {setError('Category cannot be empty'); return}
+    if (searchName === "") {setError('Product Name cannot be empty'); return}
     const getProductsearch = async () => {
       const response = await fetch(`http://localhost:8080/api/v1/products/search?page=${currentpage}&size=${pageNum}&name=${searchName}&productCategory${category}` , {headers: {
         "Content-Type": "application/json",
@@ -177,13 +203,16 @@ export const Home = ({user}) => {
     // getProduct()
   }
   function Car() {
-    return  <select name="pageNum" id="pageNum" onChange={changePage}>
+    return  <select className="form-select" name="pageNum" id="pageNum" onChange={changePage}>
       <option value="5">{pageNum}</option>
     <option value="5">5</option>
     <option value="10" >10</option>
     <option value="30">30</option>
     <option value="50">50</option>
   </select>
+
+
+
   }
   const pageChange = (ev,pNumber) => {
     ev.preventDefault();
@@ -200,8 +229,8 @@ export const Home = ({user}) => {
 
   return (
     <div className="container">
-      <h1>Welcome to E-Commerence Titan!!!!!!!!!</h1>
-      <p>We have millions of products that are on sale</p>
+      <h1 style={{textAlign: "center", fontFamily: 'Roboto, sans-serif', marginTop: '1em'}}>Welcome to E-Commerence Titan</h1>
+      <p style={{textAlign: "center", fontFamily: 'Roboto, sans-serif'}}>Below you can find all the products that are currently listed on our website.</p>
       <div className="row">
     <div className="col-9">
     </div>
@@ -212,49 +241,76 @@ export const Home = ({user}) => {
       </div>
     
 
-      <div className="col-12" style={{backgroundColor: 'white', width: '100rpx' ,height:"110rpx"}}>
-      <div className="container">
-        <form onSubmit={submitForm}>
-        <div className="row">
-          <div className="col-3">
-            <p>Product Name:</p>
+      
+      <div className="row">
+      <div className="col-3">
 
-             <input onChange={(ev) => setSearchName(ev.target.value)}></input>
+      <div class="card" >
 
-            <br/>
+  <div class="card-body" >
+  <div ><p className="card-title"> Number Showing:</p> <Car/></div>
 
-            <input className="btn btn-primary" type="submit" value='Search' style={{float: 'left'}} />
+ 
 
-          </div>
-          
-          <div className="col-3" >
-            Category: <select name="pageNum" id="pageNum" onChange={(ev) => setCategory(ev.target.value)}>
-      <option value="5">{category}</option>
-    <option value="5">Cat 1</option>
-    <option value="10" >Cat 1</option>
-    <option value="30">Cat 1</option>
-    <option value="50">Cat 1</option>
+
+
+            <p className="card-title">Category: </p>
+            <select className="card-title form-select" name="pageNum" id="pageNum" onChange={(ev) => setCategory(ev.target.value)}>
+      <option value={category}>{category}</option>
+    <option value="books">Books</option>
+    <option value="electronics" >Electronics</option>
+    <option value="apparel">Apparel</option>
+    <option value="free stuff">Free Stuff</option>
+    <option value="entertainment">Entertainment</option>
+    <option value="sporting goods">Sporting Goods</option>
+    <option value="pet supplies">Pet Supplies</option>
+    <option value="home goods">Home Goods</option>
+    <option value="other">Other</option>
   </select>
-          </div>
-          <div className="col-2"></div>
-          <div className="col-4">
-<div style={{float: 'right'}}>Number of products in each page: <Car/></div>
 
-    <nav aria-label="Page navigation example" style={{float: 'right'}} >
+
+
+  <p className="card-title">Product Name:</p>
+
+<input className="card-title form-control" style={{width: '100%'}} onChange={(ev) => setSearchName(ev.target.value)} placeholder="Product Name"></input>
+
+  <input style={{marginTop: '1em'}} className="btn btn-primary card-title" type="submit" value='Search' onClick={(ev)=> submitForm(ev)}  />
+  {error !== "" && <ErrorMessage msg={error} />}
+
+
+ 
+  </div>
+
+
+</div>
+
+<br/>
+
+
+
+      </div>
+      <div className="col-9">
+        <div className="container">
+        <div className="row" >{productList}</div>
+        <div className="row">
+          <div className="col-9"></div>
+          <div className="col-3">
+
+          <nav aria-label="Page navigation example" style={{float: 'right'}} >
      <ul class="pagination">
       {indexes}
       </ul>
       </nav>
-    </div>
-        </div>
-        </form>
 
 
 
+          </div>
         
+        </div>
+        </div>
       </div>
       </div>
-      <div className="row" style={{marginTop: '5rem'}}>{productList}</div>
+      
    
     </div>
   );
