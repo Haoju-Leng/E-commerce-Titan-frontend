@@ -223,12 +223,16 @@ console.log(item)
 
 
 
-  return (<div className="container">
-    {/* <!-- product --> */}
-    <div className="product-content product-wrap clearfix product-deatil">
-    {added && (
-        <OkButton published={added} navigate={navigate} itemID={id} />
+  return (
+      <Fragment>
+      {added && (
+          <OkButton published={added} navigate={navigate} itemID={id} />
       )}
+      <div className="container">
+    {/* <!-- product --> */}
+
+    <div className="product-content product-wrap clearfix product-deatil">
+
 
         <div className="row">
             <div className="col-md-5 col-sm-12 col-xs-12">
@@ -373,14 +377,11 @@ console.log(item)
                 </div>
                 <hr />
                 <div className="row">
-                    <div className="col-sm-12 col-md-6 col-lg-6">
+                    <div className="col-sm-12 col-md-4 col-lg-3">
                         <a onClick={handleButtonAddCart} className="btn btn-success btn-lg">Add to cart (${item.price})</a>
                     </div>
-                    <div className="col-sm-12 col-md-6 col-lg-6">
-                        <div className="btn-group pull-right">
-
+                    <div className="col-sm-12 col-md-4 col-lg-3">
                             <button className="btn btn-white btn-default" onClick={() => onClick(item.sellerid)}><i className="fa fa-envelope" ></i> Contact Seller</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -388,6 +389,7 @@ console.log(item)
     </div>
     {/* <!-- end product --> */}
 </div>
+      </Fragment>
 
 
 
