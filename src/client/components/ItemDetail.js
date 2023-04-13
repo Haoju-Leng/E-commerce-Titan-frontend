@@ -269,13 +269,13 @@ console.log(item)
                 <hr />
                 <div className="description description-tabs">
                     <ul id="myTab" className="nav nav-pills">
-                        <li className="active"><a href="#more-information" data-toggle="tab" className="no-margin">Product Description </a></li>
+
                    
                     </ul>
                     <div id="myTabContent" className="tab-content">
 
                      
-                            <strong>Description Title</strong>
+                            <strong>Description </strong>
                             <p  style={{ color: 'red !important' }}>
                                 {item.description}
                             </p>
