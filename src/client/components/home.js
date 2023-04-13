@@ -173,12 +173,19 @@ export const Home = ({user}) => {
     console.log(category)
     console.log(searchName)
     e.preventDefault()
-    let catparam = e.target.value
-    if (catparam === "Select Category") {catparam = ''}
-    if (catparam === "All") {catparam = ''}
+    // let catparam = e.target.value
+    // if (catparam === "Select Category") {catparam = ''}
+
     // if (searchName === "") {setError('Product Name cannot be empty'); return}
     const getProductsearch = async () => {
-      const response = await fetch(`http://localhost:8080/api/v1/products/search?page=0&size=${pageNum}&name=${searchName}&productCategory=${catparam}` , {headers: {
+        //console.log(searchName, pageNum, catparam, 55555);
+        let api = "";
+        if (category === "All" || category === "Select Category") {
+            api = `http://localhost:8080/api/v1/products/search?page=0&size=${pageNum}&name=${searchName}`;
+        }else{
+            api = `http://localhost:8080/api/v1/products/search?page=0&size=${pageNum}&name=${searchName}&productCategory=${category}`;
+        }
+      const response = await fetch(api , {headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${user.token}`,
       }});
